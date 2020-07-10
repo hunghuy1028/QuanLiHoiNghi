@@ -19,14 +19,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hungh
  */
-public class mainscreen extends javax.swing.JFrame {
+public class mainscreen1 extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame
      */
     CardLayout cardLayout;
-    public mainscreen() {
+    public mainscreen1() {
         initComponents();
+        
         cardLayout = (CardLayout)(parentPanel.getLayout());
         
     }
@@ -57,15 +58,16 @@ public class mainscreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         parentPanel = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
+        yellowPanel = new javax.swing.JPanel();
+        greenPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(900, 700));
-        setPreferredSize(new java.awt.Dimension(900, 500));
+        setMinimumSize(new java.awt.Dimension(1000, 500));
+        setPreferredSize(new java.awt.Dimension(1000, 500));
 
         bc.setBackground(new java.awt.Color(255, 255, 255));
+        bc.setPreferredSize(new java.awt.Dimension(1000, 500));
 
         sidepane.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -113,27 +115,12 @@ public class mainscreen extends javax.swing.JFrame {
                 conferenceListPanelMouseClicked(evt);
             }
         });
+        conferenceListPanel.setLayout(new java.awt.BorderLayout());
 
         jLabel6.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel6.setText("Conference List");
         jLabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-
-        javax.swing.GroupLayout conferenceListPanelLayout = new javax.swing.GroupLayout(conferenceListPanel);
-        conferenceListPanel.setLayout(conferenceListPanelLayout);
-        conferenceListPanelLayout.setHorizontalGroup(
-            conferenceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(conferenceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
-        );
-        conferenceListPanelLayout.setVerticalGroup(
-            conferenceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-            .addGroup(conferenceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(conferenceListPanelLayout.createSequentialGroup()
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        conferenceListPanel.add(jLabel6, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -141,7 +128,7 @@ public class mainscreen extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(homePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(conferenceListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(conferenceListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +144,7 @@ public class mainscreen extends javax.swing.JFrame {
         sidepane.setLayout(sidepaneLayout);
         sidepaneLayout.setHorizontalGroup(
             sidepaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidepaneLayout.setVerticalGroup(
@@ -190,37 +177,41 @@ public class mainscreen extends javax.swing.JFrame {
         jPanel1.add(jPanel4, java.awt.BorderLayout.LINE_END);
 
         parentPanel.setBackground(new java.awt.Color(255, 255, 255));
+        parentPanel.setPreferredSize(new java.awt.Dimension(800, 550));
         parentPanel.setLayout(new java.awt.CardLayout());
 
-        jPanel3.setBackground(new java.awt.Color(255, 51, 0));
+        yellowPanel.setBackground(new java.awt.Color(255, 255, 153));
+        yellowPanel.setMinimumSize(new java.awt.Dimension(800, 550));
+        yellowPanel.setPreferredSize(new java.awt.Dimension(746, 528));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout yellowPanelLayout = new javax.swing.GroupLayout(yellowPanel);
+        yellowPanel.setLayout(yellowPanelLayout);
+        yellowPanelLayout.setHorizontalGroup(
+            yellowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+        yellowPanelLayout.setVerticalGroup(
+            yellowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
 
-        parentPanel.add(jPanel3, "card2");
+        parentPanel.add(yellowPanel, "card2");
 
-        jPanel7.setBackground(new java.awt.Color(102, 102, 0));
+        greenPanel.setBackground(new java.awt.Color(102, 255, 102));
+        greenPanel.setMinimumSize(new java.awt.Dimension(800, 550));
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout greenPanelLayout = new javax.swing.GroupLayout(greenPanel);
+        greenPanel.setLayout(greenPanelLayout);
+        greenPanelLayout.setHorizontalGroup(
+            greenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+        greenPanelLayout.setVerticalGroup(
+            greenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
 
-        parentPanel.add(jPanel7, "card3");
+        parentPanel.add(greenPanel, "card3");
 
         javax.swing.GroupLayout bcLayout = new javax.swing.GroupLayout(bc);
         bc.setLayout(bcLayout);
@@ -230,10 +221,10 @@ public class mainscreen extends javax.swing.JFrame {
                 .addComponent(sidepane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(bcLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(parentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(parentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         bcLayout.setVerticalGroup(
             bcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,13 +239,11 @@ public class mainscreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(bc, javax.swing.GroupLayout.DEFAULT_SIZE, 1075, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bc, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
         );
 
         pack();
@@ -269,12 +258,12 @@ public class mainscreen extends javax.swing.JFrame {
 
     private void conferenceListPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListPanelMouseClicked
         // TODO add your handling code here:
-        cardLayout.show(parentPanel,"card3");
+        cardLayout.show(parentPanel, "yellowPanel");
     }//GEN-LAST:event_conferenceListPanelMouseClicked
 
     private void homePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homePanelMouseClicked
         // TODO add your handling code here:
-        cardLayout.show(parentPanel,"card2");
+        cardLayout.show(parentPanel, "greenPanel");
     }//GEN-LAST:event_homePanelMouseClicked
 
     /**
@@ -294,14 +283,18 @@ public class mainscreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mainscreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainscreen1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mainscreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainscreen1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mainscreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainscreen1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mainscreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainscreen1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -310,7 +303,7 @@ public class mainscreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mainscreen().setVisible(true);
+                new mainscreen1().setVisible(true);
             }
         });
     }
@@ -318,6 +311,7 @@ public class mainscreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bc;
     private javax.swing.JPanel conferenceListPanel;
+    private javax.swing.JPanel greenPanel;
     private javax.swing.JLabel hoinghi;
     private javax.swing.JPanel homePanel;
     private javax.swing.JLabel jLabel1;
@@ -327,13 +321,12 @@ public class mainscreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JLabel menutext;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JPanel sidepane;
+    private javax.swing.JPanel yellowPanel;
     // End of variables declaration//GEN-END:variables
 }
