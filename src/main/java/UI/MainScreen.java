@@ -6,17 +6,20 @@
 package UI;
 
 import DAO.ConferenceDAO;
+import File.SupportFile;
 import POJOs.Conference;
 import POJOs.Location;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -149,6 +152,11 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel4.add(staticPanel);
 
         jPanel6.setBackground(new java.awt.Color(0, 204, 0));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel6.setText("Sign In");
@@ -219,7 +227,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        parentCardLayout.setBackground(new java.awt.Color(255, 204, 255));
+        parentCardLayout.setBackground(new java.awt.Color(255, 255, 255));
         parentCardLayout.setLayout(new java.awt.CardLayout());
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
@@ -238,6 +246,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         parentCardLayout.add(jPanel10, "button");
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -327,35 +336,9 @@ public class MainScreen extends javax.swing.JFrame {
         {
             for(int i = 0; i < sizeList; i++)
             {
-                JPanel jp1 = new JPanel();
-                jp1.setName("conference_"+i);
-                jp1.setLayout(new BorderLayout());
-                jp1.setPreferredSize(new Dimension(NORMAL, 80));
-                jp1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                
-                Conference temp = listConference.get(i);
-                String nameConference = temp.getTen();
-                String shortDescriptionConference = temp.getMoTaNgan();
-                String imageConference = temp.getHinhAnh();
-                Date dateConference = temp.getThoiGian();
-                String location = temp.getLocation().getTen();
-                int member = temp.getNgThamDu();
-                
-                ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
-                Image newImg = img.getImage().getScaledInstance(120, 80, Image.SCALE_DEFAULT);
-                ImageIcon setLabel = new ImageIcon(newImg);
-
-                JButton jb1 = new JButton("Button: "+i+".");
-                jp1.add(jb1, BorderLayout.NORTH);
-
-                JLabel jl1 = new JLabel("Label: "+i+".");
-                jp1.add(jl1, BorderLayout.LINE_END);
-
-                JTextField jtf = new JTextField();
-                jp1.add(jtf, BorderLayout.CENTER);
-
-                jPanel8.add(jp1);
-            }
+                JPanel jPanel = new itemConference(i);
+                jPanel8.add(jPanel);
+            }   
         }
         
         parentCardLayout.removeAll();
@@ -372,6 +355,12 @@ public class MainScreen extends javax.swing.JFrame {
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
     }//GEN-LAST:event_staticPanelMouseClicked
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        // TODO add your handling code here:
+        LoginScreen loginScreen = new LoginScreen();
+        loginScreen.setVisible(true);
+    }//GEN-LAST:event_jPanel6MouseClicked
 
     /**
      * @param args the command line arguments

@@ -26,19 +26,14 @@ import java.util.List;
  */
 public class test {
     public static void main(String[] args) {
-        Account acc = AccountDAO.getAccountByUsername("hung125");
-        if (acc == null)
-        {
-            System.out.println("Can't find this account!");
-        }
-        else
-        {
-            System.out.println("ID: "+ acc.getIdAccount());
-            System.out.println("Name: " + acc.getTen());
-            System.out.println("Pass: " + acc.getPassword());
-            //acc.toString();
-        }
-       
+        Account ac = AccountDAO.getAccount(1000);
+        Conference cf = ConferenceDAO.getConference(2);
+        
+        cf.getAccounts().add(ac);
+        boolean kq = ConferenceDAO.addConferenceAccount(cf);
+        if(kq)
+            System.out.println("True");
+        else System.out.println("False");
  
     }
     

@@ -98,6 +98,31 @@ public class AccountDAO {
         return true;
     }
     
+    public static boolean addAccountConference(Account account)
+    {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        if (AccountDAO.getAccount(account.getIdAccount()) != null)
+        {
+            return false;
+        }
+        boolean kq = true;
+        Transaction transaction = null;
+        
+        try {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(account);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            System.err.println(e);
+            kq = false;
+        }finally{
+            session.close();
+        }
+        return kq;
+    }
+    
     public static boolean updateAccount(Account account)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();

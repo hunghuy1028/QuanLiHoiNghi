@@ -77,6 +77,29 @@ public class ConferenceDAO {
         return true;
     }
     
+    public static boolean addConferenceAccount(Conference c)
+    {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (ConferenceDAO.getConference(c.getIdHoiNghi()) != null)
+        {
+            return false;
+        }
+        boolean kq = true;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(c);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            transaction.rollback();
+            System.err.println(ex);
+            kq = false;
+        } finally {
+            session.close();
+        }
+        return kq; 
+    }
+    
     public static boolean updateConference(Conference c)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();

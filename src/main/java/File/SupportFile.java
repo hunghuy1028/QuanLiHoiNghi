@@ -7,6 +7,8 @@ package File;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -34,9 +36,27 @@ public class SupportFile {
         return generatedPassword;
     }
     
+    public static int getIdConferenceByCustomName(String name)
+    {
+        return Integer.valueOf(name.substring(11));
+    }
+    
+    public static String getCustomTimeString(Date date)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        return String.format(day + "/" + month + "/" + year + " " + hour + ":" + minute);
+    }
+    
 //    public static void main(String[] args) {
-//        SupportFile a = new SupportFile();
-//        String re = a.getSecurePassword("hung123");
-//        System.out.println("pass: " + re);
+//        Calendar c = Calendar.getInstance();
+//        Date d = c.getTime();
+//        String kq = getCustomTimeString(d);
+//        System.out.println("kq: "+ kq);
 //    }
 }
