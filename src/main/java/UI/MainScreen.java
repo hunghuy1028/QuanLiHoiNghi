@@ -5,7 +5,23 @@
  */
 package UI;
 
+import DAO.ConferenceDAO;
+import POJOs.Conference;
+import POJOs.Location;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.LayoutManager;
+import java.util.Date;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -48,17 +64,22 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         parentCardLayout = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel8 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 500));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 50));
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 255));
@@ -87,6 +108,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("Home");
+        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         HomePanel.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(HomePanel);
@@ -103,6 +125,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Conference List");
+        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         conferenceListPanel.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(conferenceListPanel);
@@ -120,6 +143,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setText("Static");
+        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         staticPanel.add(jLabel4, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(staticPanel);
@@ -154,36 +178,56 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 204));
 
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
+        jLabel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/list.png"))); // NOI18N
+
+        jTextField1.setVerifyInputWhenFocusTarget(false);
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search_b.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(406, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(4, 4, 4))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel10))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         parentCardLayout.setBackground(new java.awt.Color(255, 204, 255));
         parentCardLayout.setLayout(new java.awt.CardLayout());
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Test 1-");
-        jPanel3.add(jLabel5, java.awt.BorderLayout.CENTER);
-
+        jPanel3.setLayout(new java.awt.GridLayout(5, 1));
         parentCardLayout.add(jPanel3, "text");
 
         jPanel9.setBackground(new java.awt.Color(153, 255, 204));
-        jPanel9.setLayout(new java.awt.BorderLayout());
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("jLabel7");
-        jPanel9.add(jLabel7, java.awt.BorderLayout.CENTER);
-
+        jPanel9.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
         parentCardLayout.add(jPanel9, "label");
 
         jPanel10.setBackground(new java.awt.Color(51, 255, 204));
@@ -193,6 +237,14 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel10.add(jButton1, java.awt.BorderLayout.CENTER);
 
         parentCardLayout.add(jPanel10, "button");
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setLayout(new java.awt.GridLayout(0, 1, 0, 7));
+        jScrollPane1.setViewportView(jPanel8);
+
+        parentCardLayout.add(jScrollPane1, "card5");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -204,7 +256,7 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -216,8 +268,8 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -226,7 +278,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -254,13 +306,60 @@ public class MainScreen extends javax.swing.JFrame {
         parentCardLayout.add(jPanel3);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
+//        int width = parentCardLayout.getWidth();
+//        int height = parentCardLayout.getHeight();
+//        ImageIcon img = new javax.swing.ImageIcon(getClass().getResource("/Images/khoinghiep.jpg"));
+//        Image newImg = img.getImage().getScaledInstance(600, 400, Image.SCALE_DEFAULT);
+//        ImageIcon setLabel = new ImageIcon(newImg);
+//        jLabel5.setIcon(setLabel);
     }//GEN-LAST:event_HomePanelMouseClicked
 
     private void conferenceListPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListPanelMouseClicked
         // TODO add your handling code here:
         //cardLayout.show(parentCardLayout, "label");
+        
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
+        jPanel8.removeAll();
+        List<Conference> listConference = ConferenceDAO.getListConference();
+        int sizeList = listConference.size();
+        
+        if(sizeList > 0)
+        {
+            for(int i = 0; i < sizeList; i++)
+            {
+                JPanel jp1 = new JPanel();
+                jp1.setName("conference_"+i);
+                jp1.setLayout(new BorderLayout());
+                jp1.setPreferredSize(new Dimension(NORMAL, 80));
+                jp1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                
+                Conference temp = listConference.get(i);
+                String nameConference = temp.getTen();
+                String shortDescriptionConference = temp.getMoTaNgan();
+                String imageConference = temp.getHinhAnh();
+                Date dateConference = temp.getThoiGian();
+                String location = temp.getLocation().getTen();
+                int member = temp.getNgThamDu();
+                
+                ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
+                Image newImg = img.getImage().getScaledInstance(120, 80, Image.SCALE_DEFAULT);
+                ImageIcon setLabel = new ImageIcon(newImg);
+
+                JButton jb1 = new JButton("Button: "+i+".");
+                jp1.add(jb1, BorderLayout.NORTH);
+
+                JLabel jl1 = new JLabel("Label: "+i+".");
+                jp1.add(jl1, BorderLayout.LINE_END);
+
+                JTextField jtf = new JTextField();
+                jp1.add(jtf, BorderLayout.CENTER);
+
+                jPanel8.add(jp1);
+            }
+        }
+        
         parentCardLayout.removeAll();
-        parentCardLayout.add(jPanel9);
+        parentCardLayout.add(jScrollPane1);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
     }//GEN-LAST:event_conferenceListPanelMouseClicked
@@ -314,12 +413,13 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel conferenceListPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -328,7 +428,10 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel parentCardLayout;
     private javax.swing.JPanel staticPanel;
     // End of variables declaration//GEN-END:variables

@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author hungh
  */
-public class HashPassword {
+public class SupportFile {
     
     public static String getSecurePassword(String passwordToHash) throws NoSuchAlgorithmException
     {
@@ -35,7 +35,7 @@ public class HashPassword {
     }
     
 //    public static void main(String[] args) {
-//        HashPassword a = new HashPassword();
+//        SupportFile a = new SupportFile();
 //        String re = a.getSecurePassword("hung123");
 //        System.out.println("pass: " + re);
 //    }

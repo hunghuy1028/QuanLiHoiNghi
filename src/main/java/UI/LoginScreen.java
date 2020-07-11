@@ -6,7 +6,7 @@
 package UI;
 
 import DAO.AccountDAO;
-import File.HashPassword;
+import File.SupportFile;
 import POJOs.Account;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
@@ -480,7 +480,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     else
                     {
                         try {
-                            String passwordHased = HashPassword.getSecurePassword(currentPassword);
+                            String passwordHased = SupportFile.getSecurePassword(currentPassword);
                             Account newAccount = new Account();
                             newAccount.setTen(currentName);
                             newAccount.setEmail(currentEmail);
@@ -542,7 +542,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     //hashing
                     try {
                         String passwordHased = null;
-                        passwordHased = HashPassword.getSecurePassword(currentPassword);
+                        passwordHased = SupportFile.getSecurePassword(currentPassword);
 
                         if (passwordDB.equals(passwordHased))
                         {
