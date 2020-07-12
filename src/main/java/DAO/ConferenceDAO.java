@@ -80,10 +80,6 @@ public class ConferenceDAO {
     public static boolean addConferenceAccount(Conference c)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        if (ConferenceDAO.getConference(c.getIdHoiNghi()) != null)
-        {
-            return false;
-        }
         boolean kq = true;
         Transaction transaction = null;
         try {

@@ -6,7 +6,10 @@
 package DAO;
 
 import POJOs.Account;
+import POJOs.Conference;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -102,10 +105,6 @@ public class AccountDAO {
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
         
-        if (AccountDAO.getAccount(account.getIdAccount()) != null)
-        {
-            return false;
-        }
         boolean kq = true;
         Transaction transaction = null;
         

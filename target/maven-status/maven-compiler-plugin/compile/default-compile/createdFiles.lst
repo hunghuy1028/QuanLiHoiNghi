@@ -6,6 +6,7 @@ UI\LoginScreen.class
 UI\LoginScreen$6.class
 POJOs\Account.class
 DAO\HibernateUtil.class
+UI\panelHandling\itemConference.class
 POJOs\Conference.class
 UI\MainScreen.class
 UI\MainScreen$2.class
@@ -13,9 +14,9 @@ DAO\LocationDAO.class
 UI\LoginScreen$5.class
 DAO\ConferenceDAO.class
 UI\LoginScreen$3.class
-UI\itemConference.class
 UI\LoginScreen$7.class
 UI\MainScreen$4.class
+UI\MainScreen$6.class
 UI\LoginScreen$2.class
 UI\LoginScreen$4.class
 UI\MainScreen$1.class
