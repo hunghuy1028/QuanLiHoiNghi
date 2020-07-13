@@ -8,7 +8,6 @@ package UI.panelHandling;
 import DAO.ConferenceDAO;
 import POJOs.Conference;
 import File.SupportFile;
-import java.util.List;
 import java.util.Date;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -17,16 +16,16 @@ import javax.swing.ImageIcon;
  *
  * @author hungh
  */
-public class itemConference extends javax.swing.JPanel {
+public class listViewConference extends javax.swing.JPanel {
 
     /**
      * Creates new form itemConference
      */
-    public itemConference() {
+    public listViewConference() {
         initComponents();
     }
 
-    public itemConference(int i) {
+    public listViewConference(int i) {
         initComponents();
         settingUp(i);
     }

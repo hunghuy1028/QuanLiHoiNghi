@@ -5,11 +5,12 @@
  */
 package UI;
 
-import UI.panelHandling.itemConference;
+import UI.panelHandling.listViewConference;
 import DAO.ConferenceDAO;
 import File.SupportFile;
 import POJOs.Conference;
 import POJOs.Location;
+import UI.panelHandling.cardViewConference;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -24,8 +25,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -55,10 +54,9 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         displaySidePanel();
-        //conferenceListPanel.setVisible(false);
-        //jPanel7.setVisible(false);
-        //cardLayout = (CardLayout)(parentCardLayout.getLayout());
-      
+        initDataFromDB();
+        navigatorPanel.setVisible(false);
+ 
     }
 
     /**
@@ -88,23 +86,23 @@ public class MainScreen extends javax.swing.JFrame {
         profileLabel = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
         signInPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        navigatorPanel = new javax.swing.JPanel();
+        cardViewButton = new javax.swing.JLabel();
+        listViewButton = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         parentCardLayout = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        listViewScrollPane = new javax.swing.JScrollPane();
         listConferencePanel = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        cardViewScrollPane = new javax.swing.JScrollPane();
+        cardConferencePanel = new javax.swing.JPanel();
+        detailConferenceScrollPane = new javax.swing.JScrollPane();
         detailConferencePanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         backToListLabel = new javax.swing.JLabel();
@@ -248,19 +246,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel4.add(jPanel16);
 
-        jPanel17.setBackground(new java.awt.Color(0, 204, 204));
-        jPanel17.setMaximumSize(new java.awt.Dimension(200, 45));
-        jPanel17.setMinimumSize(new java.awt.Dimension(200, 45));
-        jPanel17.setPreferredSize(new java.awt.Dimension(200, 45));
-        jPanel17.setLayout(new java.awt.BorderLayout());
-
-        jLabel14.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel14.setText("jLabel14");
-        jLabel14.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jPanel17.add(jLabel14, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(jPanel17);
-
         signInPanel.setBackground(new java.awt.Color(0, 204, 0));
         signInPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -294,45 +279,56 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 204));
+        navigatorPanel.setBackground(new java.awt.Color(255, 255, 204));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
-        jLabel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
+        cardViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
+        cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
+        cardViewButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cardViewButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cardViewButtonMouseClicked(evt);
+            }
+        });
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/list.png"))); // NOI18N
+        listViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/list.png"))); // NOI18N
+        listViewButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listViewButtonMouseClicked(evt);
+            }
+        });
 
         jTextField1.setVerifyInputWhenFocusTarget(false);
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search_b.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout navigatorPanelLayout = new javax.swing.GroupLayout(navigatorPanel);
+        navigatorPanel.setLayout(navigatorPanelLayout);
+        navigatorPanelLayout.setHorizontalGroup(
+            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navigatorPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(45, 45, 45)
-                .addComponent(jLabel9)
+                .addComponent(listViewButton)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8)
+                .addComponent(cardViewButton)
                 .addGap(4, 4, 4))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        navigatorPanelLayout.setVerticalGroup(
+            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(navigatorPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(navigatorPanelLayout.createSequentialGroup()
+                        .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(navigatorPanelLayout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel10))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cardViewButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(listViewButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -352,19 +348,28 @@ public class MainScreen extends javax.swing.JFrame {
 
         parentCardLayout.add(jPanel10, "button");
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        listViewScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        listViewScrollPane.setBorder(null);
+        listViewScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         listConferencePanel.setBackground(new java.awt.Color(255, 255, 255));
         listConferencePanel.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
-        jScrollPane1.setViewportView(listConferencePanel);
+        listViewScrollPane.setViewportView(listConferencePanel);
 
-        parentCardLayout.add(jScrollPane1, "card5");
+        parentCardLayout.add(listViewScrollPane, "card5");
 
-        jScrollPane3.setBorder(null);
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(794, 444));
+        cardViewScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        cardViewScrollPane.setBorder(null);
+        cardViewScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        cardConferencePanel.setLayout(new java.awt.GridLayout(0, 3, 10, 10));
+        cardViewScrollPane.setViewportView(cardConferencePanel);
+
+        parentCardLayout.add(cardViewScrollPane, "card6");
+
+        detailConferenceScrollPane.setBorder(null);
+        detailConferenceScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        detailConferenceScrollPane.setPreferredSize(new java.awt.Dimension(794, 444));
 
         detailConferencePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -491,21 +496,21 @@ public class MainScreen extends javax.swing.JFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
         );
 
-        jScrollPane3.setViewportView(detailConferencePanel);
+        detailConferenceScrollPane.setViewportView(detailConferencePanel);
 
-        parentCardLayout.add(jScrollPane3, "card5");
+        parentCardLayout.add(detailConferenceScrollPane, "card5");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -550,57 +555,21 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void HomePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomePanelMouseClicked
         // TODO add your handling code here:
-        jPanel7.setVisible(true);
+        navigatorPanel.setVisible(false);
     }//GEN-LAST:event_HomePanelMouseClicked
 
     private void conferenceListPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListPanelMouseClicked
-        // TODO add your handling code here:
-        
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
-        jPanel7.setVisible(true);
-        listConferencePanel.removeAll();
-        
-        List<Conference> listConference = ConferenceDAO.getListConference();
-        int sizeList = listConference.size();
-        
-        if(sizeList > 0)
-        {
-            for(int i = 0; i < sizeList; i++)
-            { 
-                Conference c = listConference.get(i);
-                int temp = c.getIdHoiNghi();
-                JPanel jPanel = new itemConference(temp);
-                jPanel.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        setDetailConferencePanel(c);
-                        
-                        parentCardLayout.removeAll();
-                        parentCardLayout.add(jScrollPane3);
-                        parentCardLayout.repaint();
-                        parentCardLayout.revalidate();
-                    }
-                    
-                });
-                //jPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                listConferencePanel.add(jPanel);
-            }   
-        }
-        else
-        {
-            JLabel noti = new JLabel("Không có hội nghị nào diễn ra!");
-            listConferencePanel.add(noti, BorderLayout.CENTER);
-        }
-        
+        // TODO add your handling code here:        
+        navigatorPanel.setVisible(true);
         parentCardLayout.removeAll();
-        parentCardLayout.add(jScrollPane1);
+        parentCardLayout.add(listViewScrollPane);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
     }//GEN-LAST:event_conferenceListPanelMouseClicked
 
     private void statisticsPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticsPanelMouseClicked
         // TODO add your handling code here:
-        jPanel7.setVisible(true);
+        navigatorPanel.setVisible(true);
         parentCardLayout.removeAll();
         parentCardLayout.add(jPanel10);
         parentCardLayout.repaint();
@@ -609,18 +578,11 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void signInPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInPanelMouseClicked
         // TODO add your handling code here:
-//        CountDownLatch loginSignal = new CountDownLatch(1);
-//        
-//        LoginScreen loginScreen = new LoginScreen();
-//        loginScreen.setVisible(true);
-//        
-//       
-//        typeUser = loginScreen.getTypeAccount();
-//        System.out.println("account: " + typeUser);
-//        displaySidePanel();
-
-        NewJDialog j = new NewJDialog(this, rootPaneCheckingEnabled);
-        j.setVisible(true);
+        LoginScreen loginDialog = new LoginScreen(this, rootPaneCheckingEnabled);
+        loginDialog.setVisible(true);
+        
+        typeUser = loginDialog.getTypeAccount();
+        displaySidePanel();  
         System.out.println("account: " + typeUser);
     }//GEN-LAST:event_signInPanelMouseClicked
 
@@ -629,10 +591,29 @@ public class MainScreen extends javax.swing.JFrame {
         conferenceListPanelMouseClicked(evt);
     }//GEN-LAST:event_backToListLabelMouseClicked
 
+    private void cardViewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardViewButtonMouseClicked
+        // TODO add your handling code here:
+        navigatorPanel.setVisible(true);
+        parentCardLayout.removeAll();
+        parentCardLayout.add(cardViewScrollPane);
+        parentCardLayout.repaint();
+        parentCardLayout.revalidate();
+        
+    }//GEN-LAST:event_cardViewButtonMouseClicked
+
+    private void listViewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listViewButtonMouseClicked
+        // TODO add your handling code here:
+        navigatorPanel.setVisible(true);
+        parentCardLayout.removeAll();
+        parentCardLayout.add(listViewScrollPane);
+        parentCardLayout.repaint();
+        parentCardLayout.revalidate();
+    }//GEN-LAST:event_listViewButtonMouseClicked
+
     private void setDetailConferencePanel(Conference conference)
     {
-        jScrollPane3.getVerticalScrollBar().setUnitIncrement(20);
-        jPanel7.setVisible(false);
+        detailConferenceScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+        navigatorPanel.setVisible(false);
         backToListLabel.setAutoscrolls(false);
         
         
@@ -686,11 +667,65 @@ public class MainScreen extends javax.swing.JFrame {
     private void setStateSidePanel(boolean b)
     {
         jPanel16.setVisible(b);
-        jPanel17.setVisible(b);
         statisticsPanel.setVisible(b);
         conferenceManagementPanel.setVisible(b);
         userManagementPanel.setVisible(b);
         profilePanel.setVisible(b);
+    }
+    
+    private void initDataFromDB()
+    {
+        cardViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        cardConferencePanel.removeAll();
+        listViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        listConferencePanel.removeAll();
+        
+        navigatorPanel.setVisible(true);
+        
+        List<Conference> listConference = ConferenceDAO.getListConference();
+        int sizeList = listConference.size();
+        
+        if(sizeList > 0)
+        {
+            for(int i = 0; i< sizeList; i++)
+            {
+                Conference c = listConference.get(i);
+                int id = c.getIdHoiNghi();
+                JPanel j1 = new cardViewConference(id);
+                j1.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        setDetailConferencePanel(c);
+                        parentCardLayout.removeAll();
+                        parentCardLayout.add(detailConferenceScrollPane);
+                        parentCardLayout.repaint();
+                        parentCardLayout.revalidate();
+                    }
+                });
+                
+                JPanel j2 = new listViewConference(id);
+                j2.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        setDetailConferencePanel(c);
+                        parentCardLayout.removeAll();
+                        parentCardLayout.add(detailConferenceScrollPane);
+                        parentCardLayout.repaint();
+                        parentCardLayout.revalidate();
+                    }
+                    
+                });
+                //jPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                cardConferencePanel.add(j1);
+                listConferencePanel.add(j2);
+            }
+        }
+        else
+        {
+            JLabel noti = new JLabel("Không có hội nghị nào diễn ra!");
+            listConferencePanel.add(noti, BorderLayout.CENTER);
+        }
+
     }
     
     /**
@@ -738,10 +773,14 @@ public class MainScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HomePanel;
     private javax.swing.JLabel backToListLabel;
+    private javax.swing.JPanel cardConferencePanel;
+    private javax.swing.JLabel cardViewButton;
+    private javax.swing.JScrollPane cardViewScrollPane;
     private javax.swing.JPanel conferenceListPanel;
     private javax.swing.JLabel conferenceManagementLabel;
     private javax.swing.JPanel conferenceManagementPanel;
     private javax.swing.JPanel detailConferencePanel;
+    private javax.swing.JScrollPane detailConferenceScrollPane;
     private javax.swing.JTextArea detailDescriptionLabel;
     private javax.swing.JLabel detailImageLabel;
     private javax.swing.JLabel detailLocationLabel;
@@ -754,33 +793,29 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel listConferencePanel;
+    private javax.swing.JLabel listViewButton;
+    private javax.swing.JScrollPane listViewScrollPane;
+    private javax.swing.JPanel navigatorPanel;
     private javax.swing.JPanel parentCardLayout;
     private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel profilePanel;
@@ -789,3 +824,5 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel userManagementPanel;
     // End of variables declaration//GEN-END:variables
 }
+
+
