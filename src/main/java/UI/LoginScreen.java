@@ -9,6 +9,7 @@ import DAO.AccountDAO;
 import File.SupportFile;
 import POJOs.Account;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.CountDownLatch;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +21,9 @@ public class LoginScreen extends javax.swing.JFrame {
     /**
      * Creates new form LoginScreen
      */
+    
+    int isLoginSuccess = -1;
+    
     public LoginScreen() {
         initComponents();
         
@@ -30,6 +34,24 @@ public class LoginScreen extends javax.swing.JFrame {
         signIn.setVisible(true);
         signUp.setVisible(false);
     }
+
+//    LoginScreen(CountDownLatch loginSignal) {
+//        initComponents();
+//        
+//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        setVisible(true);
+//        setResizable(false);
+//        
+//        signIn.setVisible(true);
+//        signUp.setVisible(false);
+//        if (isLoginSuccess >= 0)
+//        {
+//            loginSignal.countDown();
+//        }
+//        
+//    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -414,9 +436,9 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         // TODO add your handling code here:
-        boolean b = checkLogin();
-        if (b)
+        if (isLoginSuccess >= 0)
         {
+            
             this.dispose();
         }
     }//GEN-LAST:event_signInButtonActionPerformed
@@ -512,11 +534,10 @@ public class LoginScreen extends javax.swing.JFrame {
         return isRegisterSuccess;
     }
     
-    public boolean checkLogin()
+    public int checkLogin()
     {
         String currentUsername = signIn_username.getText();
         String currentPassword = new String(signIn_password.getPassword());
-        boolean isLoginSuccess = false;
         
         if (currentUsername.equals(""))
         {
@@ -546,8 +567,9 @@ public class LoginScreen extends javax.swing.JFrame {
 
                         if (passwordDB.equals(passwordHased))
                         {
-                            JOptionPane.showMessageDialog(null, "Sign in success!");
-                            isLoginSuccess = true;
+                            JOptionPane.showMessageDialog(null, "Sign in success!. Account type: " + account.getAccountType());
+                            
+                            isLoginSuccess = account.getAccountType();
                         }
                         else
                         {
@@ -562,6 +584,12 @@ public class LoginScreen extends javax.swing.JFrame {
         }
         return isLoginSuccess;
     }
+    
+    public int getTypeAccount()
+    {
+        return isLoginSuccess;
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -594,6 +622,7 @@ public class LoginScreen extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginScreen().setVisible(true);
+                
             }
         });
     }
