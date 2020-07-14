@@ -5,9 +5,11 @@
  */
 package UI;
 
+import DAO.AccountDAO;
 import UI.panelHandling.listViewConference;
 import DAO.ConferenceDAO;
 import File.SupportFile;
+import POJOs.Account;
 import POJOs.Conference;
 import POJOs.Location;
 import UI.panelHandling.cardViewConference;
@@ -23,10 +25,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -36,7 +37,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.text.DefaultCaret;
 
 /**
  *
@@ -50,11 +50,13 @@ public class MainScreen extends javax.swing.JFrame {
     
     int typeView = 0;  //0: list view. 1: card view
     int typeUser = -1;  //-1: not logged in. 0:admin. 1: user
+    Account account = null;
     
     public MainScreen() {
         initComponents();
         displaySidePanel();
         initDataFromDB();
+        settingComponents();
         navigatorPanel.setVisible(false);
  
     }
@@ -68,35 +70,35 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        rootPanel = new javax.swing.JPanel();
+        logoPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        HomePanel = new javax.swing.JPanel();
+        sidePanel = new javax.swing.JPanel();
+        homeSidePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        conferenceListPanel = new javax.swing.JPanel();
+        conferenceListSidePanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        statisticsPanel = new javax.swing.JPanel();
+        statisticsSidePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        conferenceManagementPanel = new javax.swing.JPanel();
+        conferenceManagementSidePanel = new javax.swing.JPanel();
         conferenceManagementLabel = new javax.swing.JLabel();
-        userManagementPanel = new javax.swing.JPanel();
+        userManagementSidePanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        profilePanel = new javax.swing.JPanel();
+        profileSidePanel = new javax.swing.JPanel();
         profileLabel = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         signInPanel = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        signInLabel = new javax.swing.JLabel();
+        contentPanel = new javax.swing.JPanel();
         navigatorPanel = new javax.swing.JPanel();
         cardViewButton = new javax.swing.JLabel();
         listViewButton = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         parentCardLayout = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        homePanel = new javax.swing.JPanel();
+        statisticsPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         listViewScrollPane = new javax.swing.JScrollPane();
         listConferencePanel = new javax.swing.JPanel();
@@ -119,119 +121,149 @@ public class MainScreen extends javax.swing.JFrame {
         detailTimeLabel = new javax.swing.JLabel();
         detailLocationLabel = new javax.swing.JLabel();
         detailMemberLabel = new javax.swing.JLabel();
+        profilePanel = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        yourProfileLabel = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        profile_emailLabel = new javax.swing.JTextField();
+        profile_nameLabel = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        profile_usrnameLabel = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        profile_oldpassLabel = new javax.swing.JPasswordField();
+        profile_newPassLabel = new javax.swing.JPasswordField();
+        profile_reNewPassLabel = new javax.swing.JPasswordField();
+        profile_updateButton = new javax.swing.JButton();
+        profile_defaultButton = new javax.swing.JButton();
+        conferenceManagementPanel = new javax.swing.JPanel();
+        userManagementPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 500));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 50));
+        rootPanel.setBackground(new java.awt.Color(255, 255, 255));
+        rootPanel.setPreferredSize(new java.awt.Dimension(1000, 50));
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 255));
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        logoPanel.setBackground(new java.awt.Color(0, 153, 255));
+        logoPanel.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/meeting.png"))); // NOI18N
         jLabel1.setText("Conference");
-        jPanel2.add(jLabel1, java.awt.BorderLayout.CENTER);
+        logoPanel.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
+        sidePanel.setBackground(new java.awt.Color(0, 153, 153));
+        sidePanel.setLayout(new javax.swing.BoxLayout(sidePanel, javax.swing.BoxLayout.PAGE_AXIS));
 
-        HomePanel.setBackground(new java.awt.Color(204, 255, 204));
-        HomePanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        HomePanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        HomePanel.setPreferredSize(new java.awt.Dimension(200, 45));
-        HomePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        homeSidePanel.setBackground(new java.awt.Color(204, 255, 204));
+        homeSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        homeSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        homeSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        homeSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomePanelMouseClicked(evt);
+                homeSidePanelMouseClicked(evt);
             }
         });
-        HomePanel.setLayout(new java.awt.BorderLayout());
+        homeSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("Home");
         jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        HomePanel.add(jLabel2, java.awt.BorderLayout.CENTER);
+        homeSidePanel.add(jLabel2, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(HomePanel);
+        sidePanel.add(homeSidePanel);
 
-        conferenceListPanel.setBackground(new java.awt.Color(0, 255, 0));
-        conferenceListPanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        conferenceListPanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        conferenceListPanel.setPreferredSize(new java.awt.Dimension(125, 45));
-        conferenceListPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        conferenceListSidePanel.setBackground(new java.awt.Color(0, 255, 0));
+        conferenceListSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        conferenceListSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        conferenceListSidePanel.setPreferredSize(new java.awt.Dimension(125, 45));
+        conferenceListSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                conferenceListPanelMouseClicked(evt);
+                conferenceListSidePanelMouseClicked(evt);
             }
         });
-        conferenceListPanel.setLayout(new java.awt.BorderLayout());
+        conferenceListSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Conference List");
         jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        conferenceListPanel.add(jLabel3, java.awt.BorderLayout.CENTER);
+        conferenceListSidePanel.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(conferenceListPanel);
+        sidePanel.add(conferenceListSidePanel);
 
-        statisticsPanel.setBackground(new java.awt.Color(0, 204, 204));
-        statisticsPanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        statisticsPanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        statisticsPanel.setPreferredSize(new java.awt.Dimension(200, 45));
-        statisticsPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        statisticsSidePanel.setBackground(new java.awt.Color(0, 204, 204));
+        statisticsSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        statisticsSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        statisticsSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        statisticsSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                statisticsPanelMouseClicked(evt);
+                statisticsSidePanelMouseClicked(evt);
             }
         });
-        statisticsPanel.setLayout(new java.awt.BorderLayout());
+        statisticsSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setText("Statistics");
         jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        statisticsPanel.add(jLabel4, java.awt.BorderLayout.CENTER);
+        statisticsSidePanel.add(jLabel4, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(statisticsPanel);
+        sidePanel.add(statisticsSidePanel);
 
-        conferenceManagementPanel.setBackground(new java.awt.Color(204, 255, 255));
-        conferenceManagementPanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        conferenceManagementPanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        conferenceManagementPanel.setPreferredSize(new java.awt.Dimension(200, 45));
-        conferenceManagementPanel.setLayout(new java.awt.BorderLayout());
+        conferenceManagementSidePanel.setBackground(new java.awt.Color(204, 255, 255));
+        conferenceManagementSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        conferenceManagementSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        conferenceManagementSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        conferenceManagementSidePanel.setLayout(new java.awt.BorderLayout());
 
         conferenceManagementLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         conferenceManagementLabel.setText("Conference Management");
         conferenceManagementLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        conferenceManagementPanel.add(conferenceManagementLabel, java.awt.BorderLayout.CENTER);
+        conferenceManagementSidePanel.add(conferenceManagementLabel, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(conferenceManagementPanel);
+        sidePanel.add(conferenceManagementSidePanel);
 
-        userManagementPanel.setBackground(new java.awt.Color(153, 255, 255));
-        userManagementPanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        userManagementPanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        userManagementPanel.setPreferredSize(new java.awt.Dimension(200, 45));
-        userManagementPanel.setLayout(new java.awt.BorderLayout());
+        userManagementSidePanel.setBackground(new java.awt.Color(153, 255, 255));
+        userManagementSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        userManagementSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        userManagementSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        userManagementSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel12.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel12.setText("User Management");
         jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        userManagementPanel.add(jLabel12, java.awt.BorderLayout.CENTER);
+        userManagementSidePanel.add(jLabel12, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(userManagementPanel);
+        sidePanel.add(userManagementSidePanel);
 
-        profilePanel.setBackground(new java.awt.Color(0, 102, 102));
-        profilePanel.setMaximumSize(new java.awt.Dimension(200, 45));
-        profilePanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        profilePanel.setPreferredSize(new java.awt.Dimension(200, 45));
-        profilePanel.setLayout(new java.awt.BorderLayout());
+        profileSidePanel.setBackground(new java.awt.Color(0, 102, 102));
+        profileSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
+        profileSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
+        profileSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        profileSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileSidePanelMouseClicked(evt);
+            }
+        });
+        profileSidePanel.setLayout(new java.awt.BorderLayout());
 
         profileLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         profileLabel.setText("Profile");
         profileLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        profilePanel.add(profileLabel, java.awt.BorderLayout.CENTER);
+        profileSidePanel.add(profileLabel, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(profilePanel);
+        sidePanel.add(profileSidePanel);
 
         jPanel16.setBackground(new java.awt.Color(51, 255, 255));
         jPanel16.setMaximumSize(new java.awt.Dimension(200, 45));
@@ -244,17 +276,19 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         jPanel16.add(jLabel13, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanel16);
+        sidePanel.add(jPanel16);
 
         signInPanel.setBackground(new java.awt.Color(0, 204, 0));
+        signInPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         signInPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signInPanelMouseClicked(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel6.setText("Sign In");
+        signInLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        signInLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user.png"))); // NOI18N
+        signInLabel.setText("SIGN IN");
 
         javax.swing.GroupLayout signInPanelLayout = new javax.swing.GroupLayout(signInPanel);
         signInPanel.setLayout(signInPanelLayout);
@@ -264,7 +298,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(signInPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(signInPanelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
+                    .addComponent(signInLabel)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         signInPanelLayout.setVerticalGroup(
@@ -273,11 +307,11 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(signInPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(signInPanelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
+                    .addComponent(signInLabel)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        contentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         navigatorPanel.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -336,17 +370,28 @@ public class MainScreen extends javax.swing.JFrame {
         parentCardLayout.setBackground(new java.awt.Color(255, 255, 255));
         parentCardLayout.setLayout(new java.awt.CardLayout());
 
-        jPanel9.setBackground(new java.awt.Color(153, 255, 204));
-        jPanel9.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
-        parentCardLayout.add(jPanel9, "label");
+        homePanel.setBackground(new java.awt.Color(153, 255, 204));
 
-        jPanel10.setBackground(new java.awt.Color(51, 255, 204));
-        jPanel10.setLayout(new java.awt.BorderLayout());
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 795, Short.MAX_VALUE)
+        );
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 444, Short.MAX_VALUE)
+        );
+
+        parentCardLayout.add(homePanel, "label");
+
+        statisticsPanel.setBackground(new java.awt.Color(51, 255, 204));
+        statisticsPanel.setLayout(new java.awt.BorderLayout());
 
         jButton1.setText("Click here");
-        jPanel10.add(jButton1, java.awt.BorderLayout.CENTER);
+        statisticsPanel.add(jButton1, java.awt.BorderLayout.CENTER);
 
-        parentCardLayout.add(jPanel10, "button");
+        parentCardLayout.add(statisticsPanel, "button");
 
         listViewScrollPane.setBackground(new java.awt.Color(255, 255, 255));
         listViewScrollPane.setBorder(null);
@@ -500,100 +545,376 @@ public class MainScreen extends javax.swing.JFrame {
 
         parentCardLayout.add(detailConferenceScrollPane, "card5");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        profilePanel.setBackground(new java.awt.Color(255, 255, 255));
+        profilePanel.setPreferredSize(new java.awt.Dimension(794, 444));
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_256.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+        );
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        yourProfileLabel.setFont(new java.awt.Font("Corbel", 0, 36)); // NOI18N
+        yourProfileLabel.setText("Your profile");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(yourProfileLabel)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 18, Short.MAX_VALUE)
+                    .addComponent(yourProfileLabel)
+                    .addGap(0, 18, Short.MAX_VALUE)))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(242, 234, 237));
+
+        profile_emailLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        profile_emailLabel.setText("email");
+
+        profile_nameLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        profile_nameLabel.setText("name");
+
+        jLabel22.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel22.setText("Old password");
+
+        jLabel23.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel23.setText("Password");
+
+        jLabel24.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel24.setText("New password");
+
+        jLabel25.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel25.setText("Username");
+
+        jLabel26.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel26.setText("General Information");
+
+        jLabel27.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel27.setText("Retype new password");
+
+        jLabel28.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel28.setText("Email");
+
+        profile_usrnameLabel.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
+        profile_usrnameLabel.setText("username account");
+
+        jLabel30.setFont(new java.awt.Font("Corbel", 0, 22)); // NOI18N
+        jLabel30.setText("Name");
+
+        profile_oldpassLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        profile_newPassLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        profile_reNewPassLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        profile_updateButton.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        profile_updateButton.setText("UPDATE");
+        profile_updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profile_updateButtonActionPerformed(evt);
+            }
+        });
+
+        profile_defaultButton.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        profile_defaultButton.setText("DEFAULT");
+        profile_defaultButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profile_defaultButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator2)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel25)
+                            .addComponent(jLabel28))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(profile_usrnameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(profile_nameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(profile_emailLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel27)
+                            .addComponent(profile_defaultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(profile_oldpassLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(profile_newPassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(profile_updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(profile_reNewPassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(46, 46, 46))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(profile_usrnameLabel))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(profile_nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(profile_emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(profile_oldpassLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(profile_newPassLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(profile_reNewPassLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(profile_defaultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profile_updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
+        profilePanel.setLayout(profilePanelLayout);
+        profilePanelLayout.setHorizontalGroup(
+            profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profilePanelLayout.createSequentialGroup()
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        profilePanelLayout.setVerticalGroup(
+            profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profilePanelLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        parentCardLayout.add(profilePanel, "card10");
+
+        javax.swing.GroupLayout conferenceManagementPanelLayout = new javax.swing.GroupLayout(conferenceManagementPanel);
+        conferenceManagementPanel.setLayout(conferenceManagementPanelLayout);
+        conferenceManagementPanelLayout.setHorizontalGroup(
+            conferenceManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 795, Short.MAX_VALUE)
+        );
+        conferenceManagementPanelLayout.setVerticalGroup(
+            conferenceManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 444, Short.MAX_VALUE)
+        );
+
+        parentCardLayout.add(conferenceManagementPanel, "card8");
+
+        javax.swing.GroupLayout userManagementPanelLayout = new javax.swing.GroupLayout(userManagementPanel);
+        userManagementPanel.setLayout(userManagementPanelLayout);
+        userManagementPanelLayout.setHorizontalGroup(
+            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 795, Short.MAX_VALUE)
+        );
+        userManagementPanelLayout.setVerticalGroup(
+            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 444, Short.MAX_VALUE)
+        );
+
+        parentCardLayout.add(userManagementPanel, "card9");
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contentPanelLayout.createSequentialGroup()
                 .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
+        rootPanel.setLayout(rootPanelLayout);
+        rootPanelLayout.setHorizontalGroup(
+            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rootPanelLayout.createSequentialGroup()
+                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(sidePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(signInPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        rootPanelLayout.setVerticalGroup(
+            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rootPanelLayout.createSequentialGroup()
+                .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(signInPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void HomePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomePanelMouseClicked
+    private void homeSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeSidePanelMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(false);
-    }//GEN-LAST:event_HomePanelMouseClicked
-
-    private void conferenceListPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListPanelMouseClicked
-        // TODO add your handling code here:        
-        navigatorPanel.setVisible(true);
         parentCardLayout.removeAll();
-        parentCardLayout.add(listViewScrollPane);
+        parentCardLayout.add(homePanel);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
-    }//GEN-LAST:event_conferenceListPanelMouseClicked
+    }//GEN-LAST:event_homeSidePanelMouseClicked
 
-    private void statisticsPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticsPanelMouseClicked
+    private void conferenceListSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListSidePanelMouseClicked
+        // TODO add your handling code here:        
+        navigatorPanel.setVisible(true);
+        if(typeView == 0)
+        {
+            parentCardLayout.removeAll();
+            parentCardLayout.add(listViewScrollPane);
+            parentCardLayout.repaint();
+            parentCardLayout.revalidate();
+        }else
+        {
+            parentCardLayout.removeAll();
+            parentCardLayout.add(cardViewScrollPane);
+            parentCardLayout.repaint();
+            parentCardLayout.revalidate();
+        }
+    }//GEN-LAST:event_conferenceListSidePanelMouseClicked
+
+    private void statisticsSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticsSidePanelMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(true);
         parentCardLayout.removeAll();
-        parentCardLayout.add(jPanel10);
+        parentCardLayout.add(statisticsPanel);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
-    }//GEN-LAST:event_statisticsPanelMouseClicked
+    }//GEN-LAST:event_statisticsSidePanelMouseClicked
 
     private void signInPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signInPanelMouseClicked
         // TODO add your handling code here:
-        LoginScreen loginDialog = new LoginScreen(this, rootPaneCheckingEnabled);
-        loginDialog.setVisible(true);
-        
-        typeUser = loginDialog.getTypeAccount();
-        displaySidePanel();  
-        System.out.println("account: " + typeUser);
+        if(typeUser == -1)
+        {
+            LoginScreen loginDialog = new LoginScreen(this, rootPaneCheckingEnabled);
+            loginDialog.setVisible(true);
+
+            typeUser = loginDialog.getTypeAccount();
+            displaySidePanel();  
+            System.out.println("account: " + typeUser);
+            try
+            {
+                account = AccountDAO.getAccount(loginDialog.getAccountID());
+                signInLabel.setText("<html><body>Hi, <b><i>"+account.getTen()+"</i></b>!<br>SIGN OUT.</body></html>");
+            }catch(NullPointerException e){}
+        }
+        else
+        {
+            typeUser = -1;
+            account = null;
+            JOptionPane.showMessageDialog(null, "Sign out success!");
+            displaySidePanel();
+            signInLabel.setText("SIGN IN");
+            homeSidePanelMouseClicked(evt);
+        }
     }//GEN-LAST:event_signInPanelMouseClicked
 
     private void backToListLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backToListLabelMouseClicked
         // TODO add your handling code here:
-        conferenceListPanelMouseClicked(evt);
+        if(typeView == 0)
+        {
+            listViewButtonMouseClicked(evt);
+        }
+        else
+        {
+            cardViewButtonMouseClicked(evt);
+        }
     }//GEN-LAST:event_backToListLabelMouseClicked
 
     private void cardViewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardViewButtonMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(true);
+        typeView = 1;
+        
         parentCardLayout.removeAll();
         parentCardLayout.add(cardViewScrollPane);
         parentCardLayout.repaint();
@@ -604,15 +925,143 @@ public class MainScreen extends javax.swing.JFrame {
     private void listViewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listViewButtonMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(true);
+        typeView = 0;
+        
         parentCardLayout.removeAll();
         parentCardLayout.add(listViewScrollPane);
         parentCardLayout.repaint();
         parentCardLayout.revalidate();
     }//GEN-LAST:event_listViewButtonMouseClicked
 
+    private void profileSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileSidePanelMouseClicked
+        // TODO add your handling code here:
+        if(account != null)
+        {
+            if(typeUser == 0)
+            {
+                yourProfileLabel.setText("Admin profile");
+            }
+            profile_usrnameLabel.setText(account.getUsername());
+            profile_nameLabel.setText(account.getTen());
+            profile_emailLabel.setText(account.getEmail());
+
+            parentCardLayout.removeAll();
+            parentCardLayout.add(profilePanel);
+            parentCardLayout.repaint();
+            parentCardLayout.revalidate();
+        }
+        
+        
+    }//GEN-LAST:event_profileSidePanelMouseClicked
+
+    private void profile_defaultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_defaultButtonActionPerformed
+        // TODO add your handling code here:
+        if(account != null)
+        {
+            profile_nameLabel.setText(account.getTen());
+            profile_emailLabel.setText(account.getEmail());
+            
+            profile_oldpassLabel.setText("");
+            profile_newPassLabel.setText("");
+            profile_reNewPassLabel.setText("");
+        }
+    }//GEN-LAST:event_profile_defaultButtonActionPerformed
+
+    private void profile_updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_updateButtonActionPerformed
+        // TODO add your handling code here:
+        String currentName = profile_nameLabel.getText();
+        String currentEmail = profile_emailLabel.getText();
+        String currentOldPass = new String(profile_oldpassLabel.getPassword());
+        String currentNewPass = new String(profile_newPassLabel.getPassword());
+        String currentReNewPass = new String(profile_reNewPassLabel.getPassword());
+        int id = account.getIdAccount();
+        
+        //checking password
+        if(!currentName.isEmpty() && !currentEmail.isEmpty())
+        {
+            if(currentOldPass.isEmpty() && currentNewPass.isEmpty() && currentReNewPass.isEmpty())
+            {
+                int result = JOptionPane.showConfirmDialog(null , "Are you sure to change your profile?");
+                if(result == JOptionPane.YES_OPTION)
+                {
+                    account.setTen(currentName);
+                    account.setEmail(currentEmail);
+                    boolean isUpdate = AccountDAO.updateAccount(account);
+                    if(isUpdate)
+                    {
+                        JOptionPane.showMessageDialog(null, "Update success!");
+                        account = AccountDAO.getAccount(id);
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Can't update your profile right now!");
+                    }
+                }
+            }
+            else
+            {
+                if (currentNewPass.equals(currentReNewPass))
+                {
+                    if(currentNewPass.length() >= 6)
+                    {
+                        //checking old password in DB
+                        try
+                        {
+                            String oldPassHased = SupportFile.getSecurePassword(currentOldPass);
+                            int result = JOptionPane.showConfirmDialog(null , "Are you sure to change your profile?");
+                            if (result == JOptionPane.YES_OPTION)
+                            {
+                                if(account.getPassword().equals(oldPassHased))
+                                {
+                                    String newPassHased = SupportFile.getSecurePassword(currentNewPass);
+                                    account.setTen(currentName);
+                                    account.setEmail(currentEmail);
+                                    account.setPassword(newPassHased);
+                                    boolean isUpdate = AccountDAO.updateAccount(account);
+                                    if(isUpdate)
+                                    {
+                                        JOptionPane.showMessageDialog(null, "Update success!");
+                                        account = AccountDAO.getAccount(id);
+                                        
+                                        profile_oldpassLabel.setText("");
+                                        profile_newPassLabel.setText("");
+                                        profile_reNewPassLabel.setText("");
+                                    }
+                                    else
+                                    {
+                                        JOptionPane.showMessageDialog(null, "Can't update your profile right now!");
+                                    }
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "Wrong old password!");
+                                }
+                            }
+
+                        }catch(NoSuchAlgorithmException e)
+                        {
+                            JOptionPane.showMessageDialog(null, "Can't update your profile right now!");
+                        }
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "New password needs to contain at least 6 characters!");
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Password not match!");
+                }
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Name or email field(s) can't be empty");
+        }
+        
+    }//GEN-LAST:event_profile_updateButtonActionPerformed
+
     private void setDetailConferencePanel(Conference conference)
     {
-        detailConferenceScrollPane.getVerticalScrollBar().setUnitIncrement(20);
         navigatorPanel.setVisible(false);
         backToListLabel.setAutoscrolls(false);
         
@@ -655,31 +1104,27 @@ public class MainScreen extends javax.swing.JFrame {
         // user
             case 1:
                 setStateSidePanel(false);
-                statisticsPanel.setVisible(true);
-                profilePanel.setVisible(true);
+                statisticsSidePanel.setVisible(true);
+                profileSidePanel.setVisible(true);
                 break;
             default:
                 break;
         }
     }
     
-    
     private void setStateSidePanel(boolean b)
     {
         jPanel16.setVisible(b);
-        statisticsPanel.setVisible(b);
-        conferenceManagementPanel.setVisible(b);
-        userManagementPanel.setVisible(b);
-        profilePanel.setVisible(b);
+        statisticsSidePanel.setVisible(b);
+        conferenceManagementSidePanel.setVisible(b);
+        userManagementSidePanel.setVisible(b);
+        profileSidePanel.setVisible(b);
     }
     
     private void initDataFromDB()
-    {
-        cardViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+    {       
         cardConferencePanel.removeAll();
-        listViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
-        listConferencePanel.removeAll();
-        
+        listConferencePanel.removeAll();       
         navigatorPanel.setVisible(true);
         
         List<Conference> listConference = ConferenceDAO.getListConference();
@@ -728,6 +1173,13 @@ public class MainScreen extends javax.swing.JFrame {
 
     }
     
+    private void settingComponents()
+    {
+        detailConferenceScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+        listViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        cardViewScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -771,14 +1223,15 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel HomePanel;
     private javax.swing.JLabel backToListLabel;
     private javax.swing.JPanel cardConferencePanel;
     private javax.swing.JLabel cardViewButton;
     private javax.swing.JScrollPane cardViewScrollPane;
-    private javax.swing.JPanel conferenceListPanel;
+    private javax.swing.JPanel conferenceListSidePanel;
     private javax.swing.JLabel conferenceManagementLabel;
     private javax.swing.JPanel conferenceManagementPanel;
+    private javax.swing.JPanel conferenceManagementSidePanel;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JPanel detailConferencePanel;
     private javax.swing.JScrollPane detailConferenceScrollPane;
     private javax.swing.JTextArea detailDescriptionLabel;
@@ -787,6 +1240,8 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel detailMemberLabel;
     private javax.swing.JLabel detailNameLabel;
     private javax.swing.JLabel detailTimeLabel;
+    private javax.swing.JPanel homePanel;
+    private javax.swing.JPanel homeSidePanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -794,35 +1249,55 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel listConferencePanel;
     private javax.swing.JLabel listViewButton;
     private javax.swing.JScrollPane listViewScrollPane;
+    private javax.swing.JPanel logoPanel;
     private javax.swing.JPanel navigatorPanel;
     private javax.swing.JPanel parentCardLayout;
     private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel profilePanel;
+    private javax.swing.JPanel profileSidePanel;
+    private javax.swing.JButton profile_defaultButton;
+    private javax.swing.JTextField profile_emailLabel;
+    private javax.swing.JTextField profile_nameLabel;
+    private javax.swing.JPasswordField profile_newPassLabel;
+    private javax.swing.JPasswordField profile_oldpassLabel;
+    private javax.swing.JPasswordField profile_reNewPassLabel;
+    private javax.swing.JButton profile_updateButton;
+    private javax.swing.JLabel profile_usrnameLabel;
+    private javax.swing.JPanel rootPanel;
+    private javax.swing.JPanel sidePanel;
+    private javax.swing.JLabel signInLabel;
     private javax.swing.JPanel signInPanel;
     private javax.swing.JPanel statisticsPanel;
+    private javax.swing.JPanel statisticsSidePanel;
     private javax.swing.JPanel userManagementPanel;
+    private javax.swing.JPanel userManagementSidePanel;
+    private javax.swing.JLabel yourProfileLabel;
     // End of variables declaration//GEN-END:variables
 }
-
-

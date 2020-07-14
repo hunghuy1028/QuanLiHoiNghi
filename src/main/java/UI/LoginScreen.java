@@ -22,6 +22,8 @@ public class LoginScreen extends javax.swing.JDialog {
      */
     
     int isLoginSuccess = -1;
+    int accountID = -1; // if account > 0: exist
+    
     public LoginScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -543,9 +545,10 @@ public class LoginScreen extends javax.swing.JDialog {
 
                         if (passwordDB.equals(passwordHased))
                         {
-                            JOptionPane.showMessageDialog(null, "Sign in success!. Account type: " + account.getAccountType());
+                            JOptionPane.showMessageDialog(null, "Sign in success!");
                             
                             isLoginSuccess = account.getAccountType();
+                            accountID = account.getIdAccount();
                         }
                         else
                         {
@@ -563,6 +566,11 @@ public class LoginScreen extends javax.swing.JDialog {
     public int getTypeAccount()
     {
         return isLoginSuccess;
+    }
+    
+    public int getAccountID()
+    {
+        return accountID;
     }
     /**
      * @param args the command line arguments

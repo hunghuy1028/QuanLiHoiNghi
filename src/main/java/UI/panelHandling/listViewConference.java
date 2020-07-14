@@ -84,6 +84,7 @@ public class listViewConference extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(32767, 129));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,6 +98,7 @@ public class listViewConference extends javax.swing.JPanel {
         );
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         nameLabel.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
