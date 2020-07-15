@@ -97,11 +97,12 @@ public class listViewConference extends javax.swing.JPanel {
             .addComponent(imgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel2.setBackground(new java.awt.Color(54, 104, 141));
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         nameLabel.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nameLabel.setText("Tên Hội Nghị");
         jPanel2.add(nameLabel, java.awt.BorderLayout.CENTER);

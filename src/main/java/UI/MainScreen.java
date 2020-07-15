@@ -707,9 +707,9 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(profile_nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(profile_emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(profile_emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1026,6 +1026,7 @@ public class MainScreen extends javax.swing.JFrame {
                                         profile_oldpassLabel.setText("");
                                         profile_newPassLabel.setText("");
                                         profile_reNewPassLabel.setText("");
+                                        signInLabel.setText("<html><body>Hi, <b><i>"+account.getTen()+"</i></b>!<br>SIGN OUT.</body></html>");
                                     }
                                     else
                                     {

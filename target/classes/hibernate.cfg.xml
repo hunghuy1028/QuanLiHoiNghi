@@ -48,5 +48,6 @@ Contributor(s):
     <mapping resource="POJOs/Account.hbm.xml"/>
     <mapping resource="POJOs/Conference.hbm.xml"/>
     <mapping resource="POJOs/Location.hbm.xml"/>
+    <mapping resource="POJOs/UserHoinghi.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

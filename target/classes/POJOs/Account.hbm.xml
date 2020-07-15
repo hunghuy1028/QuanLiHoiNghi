@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 09-Jul-2020 22:32:00 by Hibernate Tools 4.3.1 -->
+<!-- Generated 15-Jul-2020 14:10:36 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJOs.Account" table="account" catalog="conference_manager" optimistic-lock="version">
         <id name="idAccount" type="java.lang.Integer">
@@ -30,13 +30,11 @@
                 <comment>1: True, 0: False</comment>
             </column>
         </property>
-        <set name="conferences" table="user_hoinghi" inverse="true" lazy="false" fetch="select">
+        <set name="userHoinghis" table="user_hoinghi" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="idUser" not-null="true" />
             </key>
-            <many-to-many entity-name="POJOs.Conference">
-                <column name="idHoiNghi" not-null="true" />
-            </many-to-many>
+            <one-to-many class="POJOs.UserHoinghi" />
         </set>
     </class>
 </hibernate-mapping>

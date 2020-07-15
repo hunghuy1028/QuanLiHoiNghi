@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 09-Jul-2020 22:31:57 by Hibernate Tools 4.3.1
+// Generated 15-Jul-2020 14:10:35 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +30,7 @@ public class Account  implements java.io.Serializable {
      private String email;
      private int accountType;
      private int isActive;
-     private Set conferences = new HashSet(0);
+     private Set userHoinghis = new HashSet(0);
 
     public Account() {
     }
@@ -44,14 +44,14 @@ public class Account  implements java.io.Serializable {
         this.accountType = accountType;
         this.isActive = isActive;
     }
-    public Account(String ten, String username, String password, String email, int accountType, int isActive, Set conferences) {
+    public Account(String ten, String username, String password, String email, int accountType, int isActive, Set userHoinghis) {
        this.ten = ten;
        this.username = username;
        this.password = password;
        this.email = email;
        this.accountType = accountType;
        this.isActive = isActive;
-       this.conferences = conferences;
+       this.userHoinghis = userHoinghis;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -126,13 +126,13 @@ public class Account  implements java.io.Serializable {
         this.isActive = isActive;
     }
 
-@ManyToMany(fetch=FetchType.LAZY, mappedBy="accounts")
-    public Set getConferences() {
-        return this.conferences;
+@OneToMany(fetch=FetchType.LAZY, mappedBy="account")
+    public Set getUserHoinghis() {
+        return this.userHoinghis;
     }
     
-    public void setConferences(Set conferences) {
-        this.conferences = conferences;
+    public void setUserHoinghis(Set userHoinghis) {
+        this.userHoinghis = userHoinghis;
     }
 
 

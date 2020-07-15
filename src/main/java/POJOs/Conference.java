@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 09-Jul-2020 22:31:57 by Hibernate Tools 4.3.1
+// Generated 15-Jul-2020 14:10:35 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,9 +12,8 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +36,7 @@ public class Conference  implements java.io.Serializable {
      private String hinhAnh;
      private Date thoiGian;
      private int ngThamDu;
-     private Set accounts = new HashSet(0);
+     private Set userHoinghis = new HashSet(0);
 
     public Conference() {
     }
@@ -52,7 +51,7 @@ public class Conference  implements java.io.Serializable {
         this.thoiGian = thoiGian;
         this.ngThamDu = ngThamDu;
     }
-    public Conference(Location location, String ten, String moTaNgan, String moTaChiTiet, String hinhAnh, Date thoiGian, int ngThamDu, Set accounts) {
+    public Conference(Location location, String ten, String moTaNgan, String moTaChiTiet, String hinhAnh, Date thoiGian, int ngThamDu, Set userHoinghis) {
        this.location = location;
        this.ten = ten;
        this.moTaNgan = moTaNgan;
@@ -60,7 +59,7 @@ public class Conference  implements java.io.Serializable {
        this.hinhAnh = hinhAnh;
        this.thoiGian = thoiGian;
        this.ngThamDu = ngThamDu;
-       this.accounts = accounts;
+       this.userHoinghis = userHoinghis;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -86,7 +85,7 @@ public class Conference  implements java.io.Serializable {
     }
 
     
-    @Column(name="Ten", nullable=false, length=45)
+    @Column(name="Ten", nullable=false, length=100)
     public String getTen() {
         return this.ten;
     }
@@ -96,7 +95,7 @@ public class Conference  implements java.io.Serializable {
     }
 
     
-    @Column(name="MoTaNgan", nullable=false, length=100)
+    @Column(name="MoTaNgan", nullable=false, length=200)
     public String getMoTaNgan() {
         return this.moTaNgan;
     }
@@ -106,7 +105,7 @@ public class Conference  implements java.io.Serializable {
     }
 
     
-    @Column(name="MoTaChiTiet", nullable=false, length=500)
+    @Column(name="MoTaChiTiet", nullable=false, length=1000)
     public String getMoTaChiTiet() {
         return this.moTaChiTiet;
     }
@@ -116,7 +115,7 @@ public class Conference  implements java.io.Serializable {
     }
 
     
-    @Column(name="HinhAnh", nullable=false, length=45)
+    @Column(name="HinhAnh", nullable=false, length=100)
     public String getHinhAnh() {
         return this.hinhAnh;
     }
@@ -145,16 +144,13 @@ public class Conference  implements java.io.Serializable {
         this.ngThamDu = ngThamDu;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="user_hoinghi", catalog="conference_manager", joinColumns = { 
-        @JoinColumn(name="idHoiNghi", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="idUser", nullable=false, updatable=false) })
-    public Set getAccounts() {
-        return this.accounts;
+@OneToMany(fetch=FetchType.LAZY, mappedBy="conference")
+    public Set getUserHoinghis() {
+        return this.userHoinghis;
     }
     
-    public void setAccounts(Set accounts) {
-        this.accounts = accounts;
+    public void setUserHoinghis(Set userHoinghis) {
+        this.userHoinghis = userHoinghis;
     }
 
 
