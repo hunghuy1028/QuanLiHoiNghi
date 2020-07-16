@@ -36,10 +36,10 @@ public class SupportFile {
         return generatedPassword;
     }
     
-    public static int getIdConferenceByCustomName(String name)
-    {
-        return Integer.valueOf(name.substring(11));
-    }
+//    public static int getIdConferenceByCustomName(String name)
+//    {
+//        return Integer.valueOf(name.substring(11));
+//    }
     
     public static String getCustomTimeString(Date date)
     {
