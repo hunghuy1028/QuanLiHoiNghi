@@ -545,10 +545,15 @@ public class LoginScreen extends javax.swing.JDialog {
 
                         if (passwordDB.equals(passwordHased))
                         {
-                            JOptionPane.showMessageDialog(null, "Sign in success!");
-                            
-                            isLoginSuccess = account.getAccountType();
-                            accountID = account.getIdAccount();
+                            if(account.getIsActive() == 1)
+                            {
+                                isLoginSuccess = account.getAccountType();
+                                accountID = account.getIdAccount();
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "This account has been blocked!");
+                            }
                         }
                         else
                         {

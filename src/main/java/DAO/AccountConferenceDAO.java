@@ -5,8 +5,6 @@
  */
 package DAO;
 
-import POJOs.Account;
-import POJOs.Conference;
 import POJOs.UserHoinghi;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

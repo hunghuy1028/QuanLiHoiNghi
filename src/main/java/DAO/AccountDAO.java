@@ -146,12 +146,11 @@ public class AccountDAO {
         return true;
     }
     
-    public static boolean deleteAccount(int idAccount)
+    public static boolean deleteAccount(Account account)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
-        Account account = AccountDAO.getAccount(idAccount);
-        
+               
+        boolean  kq = true;
         if (account == null)
         {
             return false;
@@ -165,11 +164,12 @@ public class AccountDAO {
         } catch (HibernateException e) {
             transaction.rollback();
             System.err.println(e);
+            kq = false;
         }finally{
             session.close();
         }
         
-        return true;
+        return kq;
     }
     
 }
