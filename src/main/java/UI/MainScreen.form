@@ -664,7 +664,7 @@
                                 <Column editable="false" title="Name" type="java.lang.Object"/>
                                 <Column editable="false" title="Location" type="java.lang.Object"/>
                                 <Column editable="false" title="Time" type="java.lang.Object"/>
-                                <Column editable="false" title="Participants" type="java.lang.Object"/>
+                                <Column editable="false" title="Joined" type="java.lang.Object"/>
                                 <Column editable="false" title="Pending" type="java.lang.Object"/>
                                 <Column editable="false" title="Edit" type="java.lang.Object"/>
                               </Table>

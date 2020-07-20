@@ -444,7 +444,7 @@ public class MainScreen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Location", "Time", "Participants", "Pending", "Edit"
+                "ID", "Name", "Location", "Time", "Joined", "Pending", "Edit"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1688,16 +1688,17 @@ public class MainScreen extends javax.swing.JFrame {
             Conference temp = listConferences.get(i);
             String location = temp.getLocation().getTen();
             String date = SupportFile.getCustomTimeString(temp.getThoiGian());
-            int participant = 0;
+            int joined = 0;
             int pending = 0;
             Iterator<UserHoinghi> usrHnIterator = temp.getUserHoinghis().iterator();
             while(usrHnIterator.hasNext())
             {
                 UserHoinghi u = usrHnIterator.next();
-                participant++;
                 if(u.getStatus() == 0) pending++;
+                else joined++;
+                    
             }
-            tableModel.addRow(new Object[]{temp.getIdHoiNghi(), temp.getTen(), location, date, participant, pending, edit_img});
+            tableModel.addRow(new Object[]{temp.getIdHoiNghi(), temp.getTen(), location, date, joined, pending, edit_img});
         }
         
         conferenceManagementTable.addMouseListener(new MouseAdapter() {
@@ -1708,7 +1709,7 @@ public class MainScreen extends javax.swing.JFrame {
                 
                 if(row>=0 && col == 6)
                 {
-                    JDialog editConference = new conferenceManagement(null, rootPaneCheckingEnabled);
+                    JDialog editConference = new conferenceManagement(null, rootPaneCheckingEnabled, listConferences.get(row).getIdHoiNghi());
                     editConference.setVisible(true);
                 }
             }
