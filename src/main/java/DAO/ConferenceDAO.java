@@ -56,11 +56,7 @@ public class ConferenceDAO {
     public static boolean addConference(Conference c)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
-//        if (ConferenceDAO.getConference(c.getIdHoiNghi()) != null)
-//        {
-//            return false;
-//        }
-        
+        boolean kq=  true;
         Transaction transaction = null;
         
         try {
@@ -70,11 +66,12 @@ public class ConferenceDAO {
         } catch (HibernateException e) {
             transaction.rollback();
             System.err.println(e);
+            kq = false;
         }finally{
             session.close();
         }
         
-        return true;
+        return kq;
     }
     
     public static boolean addConferenceAccount(Conference c)
@@ -103,6 +100,7 @@ public class ConferenceDAO {
         {
             return false;
         }
+        boolean kq = true;
         
         Transaction transaction = null;
         
@@ -113,11 +111,12 @@ public class ConferenceDAO {
         } catch (HibernateException e) {
             transaction.rollback();
             System.err.println(e);
+            kq = false;
         }finally{
             session.close();
         }
         
-        return true;
+        return kq;
     }
     
     public static boolean deleteConference(int idConference)
@@ -128,6 +127,7 @@ public class ConferenceDAO {
         {
             return false;
         }
+        boolean kq = true;
         
         Transaction transaction = null;
         
@@ -138,11 +138,12 @@ public class ConferenceDAO {
         } catch (HibernateException e) {
             transaction.rollback();
             System.err.println(e);
+            kq = false;
         }finally{
             session.close();
         }
         
-        return true;
+        return kq;
     }
     
     

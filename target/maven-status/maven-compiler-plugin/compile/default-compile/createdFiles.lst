@@ -14,6 +14,7 @@ UI\MainScreen$2.class
 DAO\LocationDAO.class
 UI\LoginScreen$5.class
 DAO\ConferenceDAO.class
+UI\panelHandling\conferenceManagement$2$1.class
 POJOs\UserHoinghi.class
 UI\MainScreen$11.class
 UI\panelHandling\userManagement$1.class
@@ -27,6 +28,7 @@ UI\MainScreen$23.class
 UI\MainScreen$9.class
 UI\LoginScreen$4.class
 UI\MainScreen$15.class
+UI\panelHandling\conferenceManagement$2.class
 DAO\AccountDAO.class
 UI\LoginScreen$8$1.class
 UI\MainScreen$3.class
@@ -41,7 +43,6 @@ UI\panelHandling\cardViewConference.class
 UI\panelHandling\listViewConference.class
 UI\panelHandling\conferenceManagement.class
 UI\LoginScreen$3.class
-UI\panelHandling\conferenceManagement$1$1.class
 UI\MainScreen$16.class
 UI\MainScreen$7.class
 UI\MainScreen$4.class
