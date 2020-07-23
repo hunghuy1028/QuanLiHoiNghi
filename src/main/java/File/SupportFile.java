@@ -36,11 +36,6 @@ public class SupportFile {
         return generatedPassword;
     }
     
-//    public static int getIdConferenceByCustomName(String name)
-//    {
-//        return Integer.valueOf(name.substring(11));
-//    }
-    
     public static String getCustomTimeString(Date date)
     {
         Calendar calendar = Calendar.getInstance();
@@ -52,11 +47,4 @@ public class SupportFile {
         int minute = calendar.get(Calendar.MINUTE);
         return String.format(day + "/" + month + "/" + year + " " + hour + ":" + minute);
     }
-    
-//    public static void main(String[] args) {
-//        Calendar c = Calendar.getInstance();
-//        Date d = c.getTime();
-//        String kq = getCustomTimeString(d);
-//        System.out.println("kq: "+ kq);
-//    }
 }

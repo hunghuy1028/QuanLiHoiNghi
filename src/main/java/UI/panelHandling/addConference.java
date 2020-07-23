@@ -7,10 +7,8 @@ package UI.panelHandling;
 
 import DAO.ConferenceDAO;
 import DAO.LocationDAO;
-import POJOs.Account;
 import POJOs.Conference;
 import POJOs.Location;
-import POJOs.UserHoinghi;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -18,13 +16,11 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 
 
 
@@ -32,77 +28,36 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hungh
  */
-public class conferenceManagement extends javax.swing.JDialog {
+public class addConference extends javax.swing.JDialog {
 
     /**
      * Creates new form conferenceManagement
      */
     JDateChooser jdc = new JDateChooser();
-    Conference conference = null;
+    File fileChoose = null;
     int idLocation = 0;
     
-    public conferenceManagement(java.awt.Frame parent, boolean modal) {
+    public addConference(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         dateText.setLayout(new BorderLayout());
         dateText.add(jdc, BorderLayout.EAST);
-    }
-    
-    public conferenceManagement(java.awt.Frame parent, boolean modal, Integer idHoiNghi) {
-        
-        super(parent, modal);
-        initComponents();
-        dateText.setLayout(new BorderLayout());
-        dateText.add(jdc, BorderLayout.EAST);
-        conference = ConferenceDAO.getConference(idHoiNghi);
-        editConference();
+        addConference2();
     }
     
     
     
-    private void editConference()
+    private void addConference2()
     {
-        jLabel6.setText("Chỉnh sửa hội nghị ID: "+conference.getIdHoiNghi());
-        nameText.setText(conference.getTen());
-        briefDes_text.setText(conference.getMoTaNgan());
-        detailDes_text.setText(conference.getMoTaChiTiet());
-        participantsText.setText(String.valueOf(conference.getNgThamDu()));
-        
-        ImageIcon newImg = new ImageIcon(new ImageIcon(getClass().getResource(conference.getHinhAnh())).getImage().getScaledInstance(260, 150, Image.SCALE_DEFAULT));
-        imageDisplay.setIcon(newImg);
-        imageDisplay.setText("");
-        
-        Date dateCon = conference.getThoiGian();
-        jdc.setDate(dateCon);
-        Calendar ca = Calendar.getInstance();
-        ca.setTime(dateCon);
-        hourText.setText(String.valueOf(ca.get(Calendar.HOUR_OF_DAY)));
-        minuteText.setText(String.valueOf(ca.get(Calendar.MINUTE)));
-        
-        DefaultTableModel participantsTable = (DefaultTableModel)totalParicipantTable.getModel();
-        
-        participantsTable.setRowCount(0);
-        
-        Iterator<UserHoinghi> userHoinghis = conference.getUserHoinghis().iterator();
-        while(userHoinghis.hasNext())
-        {
-            UserHoinghi temp = userHoinghis.next();
-            Account acc = temp.getAccount();
-            if(temp.getStatus() == 1)
-            {
-                participantsTable.addRow(new Object[]{acc.getIdAccount(), acc.getUsername(), acc.getTen()});
-            }
-            
-        }
+        jLabel6.setText("Add new conference...");
         List<Location> locations = LocationDAO.getListLocation();
         for(int l = 0 ; l < locations.size(); l++)
         {
             jComboBox1.addItem(locations.get(l).getTen());
         }
         jComboBox1.addItem("Thêm địa điểm.");
-        idLocation = conference.getLocation().getIdDiaDiem();
         
-        jComboBox1.setSelectedItem(conference.getLocation().getTen());
+        jComboBox1.setSelectedIndex(0);
         jComboBox1.addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED)
             {
@@ -142,9 +97,6 @@ public class conferenceManagement extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        totalParicipantTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -154,7 +106,6 @@ public class conferenceManagement extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit");
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(813, 580));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 255));
@@ -294,19 +245,6 @@ public class conferenceManagement extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel9.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        jLabel9.setText("Người tham dự");
-
-        totalParicipantTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID Account", "Username", "Name"
-            }
-        ));
-        jScrollPane3.setViewportView(totalParicipantTable);
-
         jButton1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton1.setText("Thoát");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -349,18 +287,11 @@ public class conferenceManagement extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(browserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(imageDisplay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,21 +302,17 @@ public class conferenceManagement extends javax.swing.JDialog {
                         .addComponent(jLabel12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(browserButton)
-                            .addComponent(jLabel9))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(browserButton)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(107, 107, 107)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(imageDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                        .addGap(7, 7, 7)
+                        .addComponent(imageDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -425,7 +352,7 @@ public class conferenceManagement extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:     
-        
+        Conference conference = new Conference();
         Calendar calendarSave = Calendar.getInstance();
         conference.setTen(nameText.getText());
         conference.setMoTaNgan(briefDes_text.getText());
@@ -436,6 +363,7 @@ public class conferenceManagement extends javax.swing.JDialog {
         Date dateSave = calendarSave.getTime();
         
         conference.setThoiGian(dateSave);
+        conference.setHinhAnh("/Images/" + fileChoose.getName());
         Location locationCurrent = LocationDAO.getLocation(idLocation);
         int currentParticipants = Integer.valueOf(participantsText.getText());
         
@@ -448,13 +376,15 @@ public class conferenceManagement extends javax.swing.JDialog {
             conference.setNgThamDu(currentParticipants);
             conference.setLocation(locationCurrent);
         
-            boolean kq = ConferenceDAO.updateConference(conference);
+            boolean kq = ConferenceDAO.addConference(conference);
             if(kq)
             {
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công");
             }else
                 JOptionPane.showMessageDialog(null, "Cập nhật thất bại. Thử lại sau!");
         }
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -465,12 +395,14 @@ public class conferenceManagement extends javax.swing.JDialog {
     private void browserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browserButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser f = new JFileChooser();
-        f.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "tif"));
+        f.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "tif"));
         int result = f.showOpenDialog(null);
         if(result == JFileChooser.APPROVE_OPTION)
         {
-            File file = f.getSelectedFile();
-            JOptionPane.showConfirmDialog(null, file.getAbsolutePath());
+            fileChoose = f.getSelectedFile();
+            ImageIcon newImg = new ImageIcon(new ImageIcon(fileChoose.getAbsolutePath())
+                    .getImage().getScaledInstance(260, 150, Image.SCALE_DEFAULT));
+            imageDisplay.setIcon(newImg);
         }
         
     }//GEN-LAST:event_browserButtonActionPerformed
@@ -492,20 +424,23 @@ public class conferenceManagement extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(conferenceManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(conferenceManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(conferenceManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(conferenceManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                conferenceManagement dialog = new conferenceManagement(new javax.swing.JFrame(), true);
+                addConference dialog = new addConference(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -536,17 +471,14 @@ public class conferenceManagement extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField minuteText;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField participantsText;
-    private javax.swing.JTable totalParicipantTable;
     // End of variables declaration//GEN-END:variables
 }

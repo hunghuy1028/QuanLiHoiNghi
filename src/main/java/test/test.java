@@ -5,6 +5,8 @@
  */
 package test;
 
+import BUS.AccountBUS;
+import BUS.ConferenceBUS;
 import DAO.AccountConferenceDAO;
 import DAO.AccountDAO;
 import POJOs.Conference;
@@ -48,28 +50,33 @@ public class test {
 //            System.out.println("Join: " + temp.getTen());
 //        }
         
-        Account ac = AccountDAO.getAccount(1003);
-        Conference cf = ConferenceDAO.getConference(2);
+//        Account ac = AccountDAO.getAccount(1001);
+//        Conference cf = ConferenceDAO.getConference(3);
+//        
+//        int kq = AccountBUS.getStateOfAccountJoinConference(ac, cf);
+            //int kq = ConferenceBUS.getNumberParticipantsAccpet(1);
         
-        UserHoinghiId id = new UserHoinghiId(cf.getIdHoiNghi(), ac.getIdAccount());
+        //System.out.println("kq = " + kq);
         
-        Iterator<UserHoinghi> iterator = cf.getUserHoinghis().iterator();
-        UserHoinghi userHoinghi  = null;
-        while (iterator.hasNext())
-        {
-            UserHoinghi t = iterator.next();
-            if(t.getAccount().getIdAccount() == 1001)
-            {
-                userHoinghi = t;
-                break;
-            }
-            
-        }
-        userHoinghi.setStatus(1);
+//        UserHoinghiId id = new UserHoinghiId(cf.getIdHoiNghi(), ac.getIdAccount());
+//        
+//        Iterator<UserHoinghi> iterator = cf.getUserHoinghis().iterator();
+//        UserHoinghi userHoinghi  = null;
+//        while (iterator.hasNext())
+//        {
+//            UserHoinghi t = iterator.next();
+//            if(t.getAccount().getIdAccount() == 1001)
+//            {
+//                userHoinghi = t;
+//                break;
+//            }
+//            
+//        }
+//        userHoinghi.setStatus(1);
         
-        System.out.println("iduser: "+ userHoinghi.getAccount().getIdAccount());
-            System.out.println("idHn: "+ userHoinghi.getConference().getIdHoiNghi());
-            System.out.println("status: "+userHoinghi.getStatus());
+//        System.out.println("iduser: "+ userHoinghi.getAccount().getIdAccount());
+//            System.out.println("idHn: "+ userHoinghi.getConference().getIdHoiNghi());
+//            System.out.println("status: "+userHoinghi.getStatus());
 //        UserHoinghi userHoinghi = new UserHoinghi();
 //        userHoinghi.setAccount(ac);
 //        userHoinghi.setStatus(1);
@@ -78,7 +85,7 @@ public class test {
 //        //cf.getUserHoinghis().add(userHoinghi);
 //        
 //        //ac.getUserHoinghis().add(userHoinghi);
-        boolean kq = AccountConferenceDAO.updateConferenceAndAccount(userHoinghi);
+        //boolean kq = AccountConferenceDAO.updateConferenceAndAccount(userHoinghi);
 //        //boolean kq = ConferenceDAO.addConferenceAccount(cf);
 //        if(kq) System.out.println("True");
 //        else System.out.println("False");

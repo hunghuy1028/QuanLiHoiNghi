@@ -7,6 +7,10 @@ package BUS;
 
 import DAO.AccountDAO;
 import POJOs.Account;
+import POJOs.Conference;
+import POJOs.UserHoinghi;
+import POJOs.UserHoinghiId;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,6 +35,24 @@ public class AccountBUS {
         for (Account account : list) {
             if (account.getAccountType() == 1 && account.getIsActive() == 1) result+=1;
         }
+        return result;
+    }
+    
+    public static int getStateOfAccountJoinConference(Account ac, Conference cf)
+    {
+        if(ac == null || cf == null) return -2;
+        int result = -1;
+        int idCon = cf.getIdHoiNghi();
+        Iterator<UserHoinghi> userHoiNghis = ac.getUserHoinghis().iterator();
+        while(userHoiNghis.hasNext())
+        {
+            UserHoinghi temp = userHoiNghis.next();
+            if (temp.getConference().getIdHoiNghi() == idCon)
+            {
+                if(temp.getStatus() == 1) result = 1;
+                else if (temp.getStatus() == 0) result = 0;
+            }
+        }   
         return result;
     }
 
