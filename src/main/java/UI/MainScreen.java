@@ -9,7 +9,7 @@ import BUS.AccountBUS;
 import BUS.ConferenceBUS;
 import DAO.AccountConferenceDAO;
 import DAO.AccountDAO;
-import UI.panelHandling.listViewConference;
+import UI.Panel.listViewConference;
 import DAO.ConferenceDAO;
 import File.SupportFile;
 import POJOs.Account;
@@ -17,11 +17,17 @@ import POJOs.Conference;
 import POJOs.Location;
 import POJOs.UserHoinghi;
 import POJOs.UserHoinghiId;
-import UI.panelHandling.addConference;
-import UI.panelHandling.cardViewConference;
-import UI.panelHandling.conferenceManagement;
-import UI.panelHandling.userManagement;
-import UI.panelHandling.statisticRegisterPanel;
+import UI.Button.BlockButtonEditor;
+import UI.Button.BlockButtonRenderer;
+import UI.Button.EditConferenceButtonEditor;
+import UI.Button.EditButtonRenderer;
+import UI.Button.NewRequestButtonEditor;
+import UI.Button.NewRequestButtonRenderer;
+import UI.Dialog.addConferenceDialog;
+import UI.Panel.cardViewConference;
+import UI.Dialog.conferenceManagementDialog;
+import UI.Panel.userManagement;
+import UI.Panel.statisticRegisterPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -38,12 +44,14 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -72,6 +80,8 @@ public class MainScreen extends javax.swing.JFrame {
         initDataFromDB();
         settingComponents();
         navigatorPanel.setVisible(false);
+        userManagementTableSetting();
+        //conferenceManagementTableSetting();
  
     }
     
@@ -121,6 +131,22 @@ public class MainScreen extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         parentCardLayout = new javax.swing.JPanel();
+        userManagementPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        totalUserLabel = new javax.swing.JLabel();
+        totalAdminLabel = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        totalblockedUserLabel = new javax.swing.JLabel();
+        accountTableScollPane = new javax.swing.JScrollPane();
+        accountTable = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         conferenceManagementPanel = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -185,22 +211,6 @@ public class MainScreen extends javax.swing.JFrame {
         profile_reNewPassLabel = new javax.swing.JPasswordField();
         profile_updateButton = new javax.swing.JButton();
         profile_defaultButton = new javax.swing.JButton();
-        userManagementPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        totalUserLabel = new javax.swing.JLabel();
-        totalAdminLabel = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        totalblockedUserLabel = new javax.swing.JLabel();
-        accountTableScollPane = new javax.swing.JScrollPane();
-        accountTable = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
 
         jLabel14.setText("jLabel14");
 
@@ -381,6 +391,7 @@ public class MainScreen extends javax.swing.JFrame {
         contentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         navigatorPanel.setBackground(new java.awt.Color(255, 255, 204));
+        navigatorPanel.setPreferredSize(new java.awt.Dimension(398, 40));
 
         cardViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
         cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
@@ -410,33 +421,188 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navigatorPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10)
-                .addGap(45, 45, 45)
+                .addGap(55, 55, 55)
                 .addComponent(listViewButton)
-                .addGap(18, 18, 18)
-                .addComponent(cardViewButton)
-                .addGap(4, 4, 4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardViewButton))
         );
         navigatorPanelLayout.setVerticalGroup(
             navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(navigatorPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addGroup(navigatorPanelLayout.createSequentialGroup()
-                        .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(navigatorPanelLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel10))
-                            .addComponent(cardViewButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(listViewButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(cardViewButton)
+            .addComponent(listViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         parentCardLayout.setBackground(new java.awt.Color(255, 255, 255));
         parentCardLayout.setLayout(new java.awt.CardLayout());
+
+        userManagementPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(54, 104, 141));
+
+        jLabel6.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("User Management");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+
+        jLabel5.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel5.setText("Overview");
+
+        jLabel8.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
+        jLabel8.setText("Total User:");
+
+        jLabel9.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
+        jLabel9.setText("Total Admin:");
+
+        totalUserLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        totalUserLabel.setText("10");
+
+        totalAdminLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        totalAdminLabel.setText("5");
+
+        jLabel17.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel17.setText("Blocked:");
+
+        totalblockedUserLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        totalblockedUserLabel.setText("7");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(totalAdminLabel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel17)
+                                .addComponent(jLabel8))
+                            .addGap(28, 28, 28)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(totalblockedUserLabel)
+                                .addComponent(totalUserLabel)))))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(totalUserLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(totalblockedUserLabel))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(totalAdminLabel))
+                .addContainerGap(240, Short.MAX_VALUE))
+        );
+
+        accountTableScollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        accountTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Username", "Name", "Email", "Conference Join", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        accountTable.setColumnSelectionAllowed(true);
+        accountTableScollPane.setViewportView(accountTable);
+        accountTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel19)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout userManagementPanelLayout = new javax.swing.GroupLayout(userManagementPanel);
+        userManagementPanel.setLayout(userManagementPanelLayout);
+        userManagementPanelLayout.setHorizontalGroup(
+            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(userManagementPanelLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accountTableScollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        userManagementPanelLayout.setVerticalGroup(
+            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userManagementPanelLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(userManagementPanelLayout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(accountTableScollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+        );
+
+        parentCardLayout.add(userManagementPanel, "card9");
 
         conferenceManagementPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -458,7 +624,7 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -522,7 +688,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))
         );
 
         parentCardLayout.add(conferenceManagementPanel, "card8");
@@ -537,7 +703,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 471, Short.MAX_VALUE)
         );
 
         parentCardLayout.add(homePanel, "label");
@@ -606,7 +772,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listConferenceJoinedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
+                .addComponent(listConferenceJoinedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
         );
 
         parentCardLayout.add(statisticsPanel, "button");
@@ -1068,181 +1234,17 @@ public class MainScreen extends javax.swing.JFrame {
 
         parentCardLayout.add(profilePanel, "card10");
 
-        userManagementPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel2.setBackground(new java.awt.Color(54, 104, 141));
-
-        jLabel6.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("User Management");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
-
-        jLabel5.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel5.setText("Overview");
-
-        jLabel8.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
-        jLabel8.setText("Total User:");
-
-        jLabel9.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
-        jLabel9.setText("Total Admin:");
-
-        totalUserLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        totalUserLabel.setText("10");
-
-        totalAdminLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        totalAdminLabel.setText("5");
-
-        jLabel17.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel17.setText("Blocked:");
-
-        totalblockedUserLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        totalblockedUserLabel.setText("7");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(totalAdminLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel17)
-                                .addComponent(jLabel8))
-                            .addGap(28, 28, 28)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(totalblockedUserLabel)
-                                .addComponent(totalUserLabel)))))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(totalUserLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(totalblockedUserLabel))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(totalAdminLabel))
-                .addContainerGap(213, Short.MAX_VALUE))
-        );
-
-        accountTableScollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        accountTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Username", "Name", "Email", "Status", "Edit", "Delete"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        accountTable.setColumnSelectionAllowed(true);
-        accountTableScollPane.setViewportView(accountTable);
-        accountTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel19)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout userManagementPanelLayout = new javax.swing.GroupLayout(userManagementPanel);
-        userManagementPanel.setLayout(userManagementPanelLayout);
-        userManagementPanelLayout.setHorizontalGroup(
-            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(userManagementPanelLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(accountTableScollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        userManagementPanelLayout.setVerticalGroup(
-            userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userManagementPanelLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(userManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(userManagementPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(accountTableScollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-        );
-
-        parentCardLayout.add(userManagementPanel, "card9");
-
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
         contentPanel.setLayout(contentPanelLayout);
         contentPanelLayout.setHorizontalGroup(
             contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
             .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         contentPanelLayout.setVerticalGroup(
             contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentPanelLayout.createSequentialGroup()
-                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1278,7 +1280,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
         );
 
         pack();
@@ -1578,7 +1580,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void addNewConferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewConferenceButtonActionPerformed
         // TODO add your handling code here:
-        new addConference(this, rootPaneCheckingEnabled).setVisible(true);  
+        new addConferenceDialog(this, rootPaneCheckingEnabled).setVisible(true);  
     }//GEN-LAST:event_addNewConferenceButtonActionPerformed
 
     private void setDetailConferencePanel(Conference conference)
@@ -1722,7 +1724,6 @@ public class MainScreen extends javax.swing.JFrame {
                     }
                     
                 });
-                //jPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 cardConferencePanel.add(j1);
                 listConferencePanel.add(j2);
             }
@@ -1766,44 +1767,17 @@ public class MainScreen extends javax.swing.JFrame {
         TableRowSorter<TableModel> sorter2 = new TableRowSorter<>(conferenceManagementTable.getModel());
         conferenceManagementTable.setRowSorter(sorter2);
         
-        String[] state = {"Deactive", "Active"}; 
-        JComboBox jcb = new JComboBox(state);
-        
-        accountTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jcb));
-        accountTable.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer(){
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                ((JLabel)cell).setIcon((Icon)value);
-                ((JLabel)cell).setText("");
-                ((JLabel) cell).setHorizontalAlignment(JLabel.CENTER);
-                return cell;
-            }
-        });
-        accountTable.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer(){
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                ((JLabel)cell).setIcon((Icon)value);
-                ((JLabel)cell).setText("");
-                ((JLabel) cell).setHorizontalAlignment(JLabel.CENTER);
-                return cell;
-            }
-        });
-        
+        ((DefaultTableCellRenderer)conferenceManagementTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         conferenceManagementTable.setRowHeight(40);
-        conferenceManagementTable.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer(){
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                ((JLabel)cell).setIcon((Icon)value);
-                ((JLabel)cell).setText("");
-                ((JLabel) cell).setHorizontalAlignment(JLabel.CENTER);
-                return cell;
-            }
-            
-        });
+        conferenceManagementTable.getColumnModel().getColumn(6).setCellRenderer(new EditButtonRenderer());
+        conferenceManagementTable.getColumnModel().getColumn(6).setCellEditor(new EditConferenceButtonEditor(new JTextField()));        
+        conferenceManagementTable.getColumnModel().getColumn(5).setCellRenderer(new NewRequestButtonRenderer());
+        conferenceManagementTable.getColumnModel().getColumn(5).setCellEditor(new NewRequestButtonEditor(new JTextField()));
         
+        ((DefaultTableCellRenderer)accountTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        accountTable.setRowHeight(40);
+        accountTable.getColumnModel().getColumn(5).setCellRenderer(new BlockButtonRenderer());
+        accountTable.getColumnModel().getColumn(5).setCellEditor(new BlockButtonEditor(new JTextField()));
         
     }
     
@@ -1811,23 +1785,15 @@ public class MainScreen extends javax.swing.JFrame {
     {
         DefaultTableModel tableModel = (DefaultTableModel)accountTable.getModel();
         
+        accountTable.setRowHeight(30); 
         tableModel.setRowCount(0);
-        accountTable.setRowHeight(30);
-    
-        List<Account> listAccounts = AccountDAO.getListAccount();
-        ImageIcon edit_img = new javax.swing.ImageIcon(getClass().getResource("/Images/edit.png"));
-        ImageIcon delete_img = new javax.swing.ImageIcon(getClass().getResource("/Images/x_24.png"));
         
-        
-        
-        DefaultTableCellRenderer centerRenderer =  new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        accountTable.setDefaultRenderer(String.class, centerRenderer);
-        String[] state = {"Deactive", "Active"};     
+        List<Account> listAccounts = AccountDAO.getListAccount();             
         for(int i = 0; i<listAccounts.size(); i++)
         {
-            Account temp = listAccounts.get(i);         
-            tableModel.addRow(new Object[]{temp.getIdAccount(),temp.getUsername(), temp.getTen(), temp.getEmail(), state[temp.getIsActive()], edit_img, delete_img});
+            Account temp = listAccounts.get(i);
+            int joined = AccountBUS.getNumberOfConferenceUserJoined(temp);
+            tableModel.addRow(new Object[]{temp.getIdAccount(), temp.getUsername(), temp.getTen(), temp.getEmail(), joined, temp});
         }
         int x = AccountBUS.getNumberNormalUser();
         int y = AccountBUS.getActiveNormalUser();
@@ -1835,81 +1801,30 @@ public class MainScreen extends javax.swing.JFrame {
         totalblockedUserLabel.setText(String.valueOf(x - y));
         totalAdminLabel.setText(String.valueOf(listAccounts.size() - x));
         
-        accountTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent evt) {
-                int row = accountTable.rowAtPoint(evt.getPoint());
-                int col = accountTable.columnAtPoint(evt.getPoint());
-                
-                if(row >=0 && col == 5)
-                {
-                    JDialog editUserDialog = new userManagement(null, rootPaneCheckingEnabled);
-                    editUserDialog.setVisible(true);
-                }
-                
-                if(row >= 0 && col == 6)
-                {
-                    int b = JOptionPane.showConfirmDialog(null, "Are you sure want to delete this user?");
-                    if(b == JOptionPane.YES_OPTION)
-                    {
-                        boolean kq = AccountDAO.deleteAccount(listAccounts.get(row));
-                        if (!kq)
-                        {
-                            JOptionPane.showMessageDialog(null, "Error! This user ");
-                        }
-                        else
-                        {
-                            tableModel.removeRow(row);
-                            JOptionPane.showMessageDialog(null, "Success!");
-                        }
-                    }
-                }
-            }
-            
-        });
-        
     }
        
     private void conferenceManagementTableSetting() {
         DefaultTableModel tableModel = (DefaultTableModel)conferenceManagementTable.getModel();
         tableModel.setRowCount(0);
         
-        
-        
         List<Conference> listConferences = ConferenceDAO.getListConference();
-        ImageIcon edit_img = new javax.swing.ImageIcon(getClass().getResource("/Images/edit.png"));
-        
+
         for(int i = 0; i< listConferences.size(); i++)
         {
             Conference temp = listConferences.get(i);
             String location = temp.getLocation().getTen();
             String date = SupportFile.getCustomTimeString(temp.getThoiGian());
             int joined = 0;
-            int pending = 0;
             Iterator<UserHoinghi> usrHnIterator = temp.getUserHoinghis().iterator();
             while(usrHnIterator.hasNext())
             {
                 UserHoinghi u = usrHnIterator.next();
-                if(u.getStatus() == 0) pending++;
-                else joined++;
+                if(u.getStatus() == 1) joined++;
                     
             }
-            tableModel.addRow(new Object[]{temp.getIdHoiNghi(), temp.getTen(), location, date, joined, pending, edit_img});
+            tableModel.addRow(new Object[]{temp.getIdHoiNghi(), temp.getTen(), location, date, joined, temp, temp.getIdHoiNghi()});
         }
         
-        
-        conferenceManagementTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent evt) {
-                int row = conferenceManagementTable.rowAtPoint(evt.getPoint());
-                int col = conferenceManagementTable.columnAtPoint(evt.getPoint());
-                
-                if(row>=0 && col == 6)
-                {
-                    new conferenceManagement(MainScreenUI, true, listConferences.get(row).getIdHoiNghi()).setVisible(true);
-                }
-            }  
-        });
     }
     
     private void statisticsPanelSetting()

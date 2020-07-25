@@ -54,7 +54,7 @@ public class AccountConferenceDAO {
         
         try {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(uh);
+            session.update(uh);
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();

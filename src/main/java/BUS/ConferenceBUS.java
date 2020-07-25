@@ -5,9 +5,9 @@
  */
 package BUS;
 
-import DAO.ConferenceDAO;
 import POJOs.Conference;
 import POJOs.UserHoinghi;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +35,28 @@ public class ConferenceBUS {
                 count++;
         }
         return count;
+    }
+    
+    public static int getNumberParticipantsPending(Conference cf)
+    {
+        int count = 0;
+        for (Iterator<UserHoinghi> iterator = cf.getUserHoinghis().iterator(); iterator.hasNext();) {
+            UserHoinghi next = iterator.next();
+            if(next.getStatus() == 0) 
+                count++;
+        }
+        return count;
+    }
+    
+    public static List<UserHoinghi> getListPendingParticipants (Conference cf)
+    {
+        List<UserHoinghi> result = new ArrayList<>();
+        for (Iterator<UserHoinghi> iterator = cf.getUserHoinghis().iterator(); iterator.hasNext();) {
+            UserHoinghi next = iterator.next();
+            if (next.getStatus() == 0) result.add(next);
+        }
+        
+        return result;
     }
     
 }

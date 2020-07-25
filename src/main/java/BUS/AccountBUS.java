@@ -56,4 +56,13 @@ public class AccountBUS {
         return result;
     }
 
+    public static int getNumberOfConferenceUserJoined(Account ac)
+    {
+        int result = 0;
+        for (Iterator<UserHoinghi> iterator = ac.getUserHoinghis().iterator(); iterator.hasNext();) {
+            UserHoinghi next = iterator.next();
+            result++;
+        }     
+        return result;
+    }
 }
