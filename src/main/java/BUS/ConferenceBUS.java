@@ -5,9 +5,14 @@
  */
 package BUS;
 
+import DAO.ConferenceDAO;
 import POJOs.Conference;
 import POJOs.UserHoinghi;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,4 +64,30 @@ public class ConferenceBUS {
         return result;
     }
     
+    public static Conference getUpcomingConference ()
+    {
+        List<Conference> list = ConferenceDAO.getListConference();
+        Calendar today = Calendar.getInstance();
+        for (int i=0; i<list.size(); i++)
+        {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(list.get(i).getThoiGian());
+            if(cal.compareTo(today) < 0)  
+            {
+                list.remove(i);
+                i--;
+            }
+        }
+        
+        Collections.sort(list, new Comparator<Conference>()
+        {
+            @Override
+            public int compare(Conference o1, Conference o2) {
+                return o1.getThoiGian().compareTo(o2.getThoiGian());             
+            }
+            
+        });
+        
+        return list.get(0);
+    }
 }

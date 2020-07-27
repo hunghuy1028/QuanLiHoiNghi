@@ -50,8 +50,20 @@ public class test {
 //            System.out.println("Join: " + temp.getTen());
 //        }
         
-//        Account ac = AccountDAO.getAccount(1001);
-//        Conference cf = ConferenceDAO.getConference(3);
+        //Account ac = AccountDAO.getAccount(1001);
+//        Conference cf = ConferenceDAO.getConference(2);
+//        Calendar calCon = Calendar.getInstance();
+//        Calendar calToday = Calendar.getInstance();  
+//        Date dateCon = cf.getThoiGian();
+//        calCon.setTime(dateCon);
+//        if(calCon.compareTo(calToday) <= 0)
+//        {
+//            System.out.println("Bé hơn");
+//        }else System.out.println("Lớn hơn");
+
+            Conference a = ConferenceBUS.getUpcomingConference();
+            System.out.println("Name: "+ a.getIdHoiNghi());
+//       
 //        
 //        int kq = AccountBUS.getStateOfAccountJoinConference(ac, cf);
             //int kq = ConferenceBUS.getNumberParticipantsAccpet(1);

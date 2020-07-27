@@ -46,11 +46,15 @@ public class listViewConference extends javax.swing.JPanel {
         String member = String.valueOf(mem);
         System.out.println("date:" + dateConference + member);
 
-        ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
-        Image newImg = img.getImage().getScaledInstance(200, 140, Image.SCALE_DEFAULT);
-        ImageIcon setLabel = new ImageIcon(newImg);
-
-        imgLabel.setIcon(setLabel);
+        try
+        {
+            ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
+            Image newImg = img.getImage().getScaledInstance(200, 140, Image.SCALE_DEFAULT);
+            ImageIcon setLabel = new ImageIcon(newImg);
+            imgLabel.setIcon(setLabel);
+        }catch(NullPointerException ex){}
+        
+        
         nameLabel.setText(nameConference);
         descriptionLabel.setText(shortDescriptionConference);
         memberLabel.setText(member);

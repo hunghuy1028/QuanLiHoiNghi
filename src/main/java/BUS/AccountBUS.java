@@ -9,7 +9,6 @@ import DAO.AccountDAO;
 import POJOs.Account;
 import POJOs.Conference;
 import POJOs.UserHoinghi;
-import POJOs.UserHoinghiId;
 import java.util.Iterator;
 import java.util.List;
 

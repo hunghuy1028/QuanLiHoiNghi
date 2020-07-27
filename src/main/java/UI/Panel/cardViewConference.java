@@ -98,11 +98,13 @@ public class cardViewConference extends javax.swing.JPanel {
         String nameConference = temp.getTen();
         String imageConference = temp.getHinhAnh();
         
-        ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
-        Image newImg = img.getImage().getScaledInstance(226, 160, Image.SCALE_DEFAULT);
-        ImageIcon setLabel = new ImageIcon(newImg);
-        
-        imageLabel.setIcon(setLabel);
+        try
+        {
+            ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
+            Image newImg = img.getImage().getScaledInstance(226, 160, Image.SCALE_DEFAULT);
+            ImageIcon setLabel = new ImageIcon(newImg);
+            imageLabel.setIcon(setLabel);
+        }catch(NullPointerException ex){}   
         nameLabel.setText(nameConference);
     }
 }

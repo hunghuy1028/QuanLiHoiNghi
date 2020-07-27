@@ -34,6 +34,7 @@ public class AcceptButtonEditor extends DefaultCellEditor {
         super(jtf);
         setClickCountToStart(1);
         button = new JButton();
+        button.setOpaque(true);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,9 +42,9 @@ public class AcceptButtonEditor extends DefaultCellEditor {
                 {
                     fireEditingStopped();
                     TableModel model = table.getModel();
-                        if (model instanceof DefaultTableModel) {
-                            ((DefaultTableModel) model).removeRow(row);
-                        }
+                    if (model instanceof DefaultTableModel) {
+                        ((DefaultTableModel) model).removeRow(row);
+                    }
                 }
             }
         });
