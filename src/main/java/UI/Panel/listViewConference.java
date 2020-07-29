@@ -44,7 +44,7 @@ public class listViewConference extends javax.swing.JPanel {
         String location = temp.getLocation().getTen();
         int mem = temp.getNgThamDu();
         String member = String.valueOf(mem);
-        System.out.println("date:" + dateConference + member);
+        //System.out.println("date:" + dateConference + member);
 
         try
         {

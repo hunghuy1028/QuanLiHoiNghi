@@ -7,6 +7,7 @@ package UI.Button;
 
 import DAO.AccountDAO;
 import POJOs.Account;
+import UI.MainScreen;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,9 @@ public class BlockButtonEditor extends DefaultCellEditor{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 fireEditingStopped();
+                MainScreen.updateDataOfAccount();
             }
         });
     }
@@ -50,7 +53,7 @@ public class BlockButtonEditor extends DefaultCellEditor{
 
     @Override
     public boolean stopCellEditing() {
-        clicked = false;
+        clicked = false;   
         return super.stopCellEditing();
     }
 
@@ -91,7 +94,7 @@ public class BlockButtonEditor extends DefaultCellEditor{
                     button.setText("Block");
                     button.setIcon(img_x);
                 } 
-            }
+            }       
         }        
         return account;
     }
@@ -100,7 +103,4 @@ public class BlockButtonEditor extends DefaultCellEditor{
     protected void fireEditingStopped() {
         super.fireEditingStopped(); 
     }
-    
-    
-    
 }

@@ -53,11 +53,7 @@ public class LocationDAO {
     public static boolean addLocation(Location lc)
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
-//        if(LocationDAO.getLocation(lc.getIdDiaDiem()) != null)
-//        {
-//            return false;
-//        }
+        boolean kq = true;
         
         Transaction transaction = null;
         
@@ -68,11 +64,12 @@ public class LocationDAO {
         } catch (HibernateException e) {
             transaction.rollback();
             System.err.println(e);
+            kq = false;
         }finally{
             session.close();
         }
         
-        return true;
+        return kq;
     }
     
     public static boolean updateLocation(Location lc)

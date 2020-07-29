@@ -85,7 +85,7 @@ public class LoginScreen extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel2.setBackground(new java.awt.Color(54, 104, 141));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_2_1.png"))); // NOI18N
 
@@ -140,7 +140,7 @@ public class LoginScreen extends javax.swing.JDialog {
             }
         });
 
-        closeButton0.setBackground(new java.awt.Color(51, 153, 255));
+        closeButton0.setBackground(new java.awt.Color(54, 104, 141));
         closeButton0.setPreferredSize(new java.awt.Dimension(45, 45));
         closeButton0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -156,7 +156,7 @@ public class LoginScreen extends javax.swing.JDialog {
         toSignUp.setFont(new java.awt.Font("Calibri", 3, 18)); // NOI18N
         toSignUp.setForeground(new java.awt.Color(102, 102, 102));
         toSignUp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        toSignUp.setText("Don't have account? Sign up!");
+        toSignUp.setText("Not a member? Click here to sign up!");
         toSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         toSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,12 +169,14 @@ public class LoginScreen extends javax.swing.JDialog {
         signInLayout.setHorizontalGroup(
             signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signInLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(closeButton0, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signInLayout.createSequentialGroup()
-                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addComponent(closeButton0, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(toSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))))
             .addGroup(signInLayout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,10 +187,8 @@ public class LoginScreen extends javax.swing.JDialog {
                             .addComponent(signIn_password, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(76, Short.MAX_VALUE))
                     .addGroup(signInLayout.createSequentialGroup()
-                        .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel5)
+                        .addGap(0, 219, Short.MAX_VALUE))))
         );
         signInLayout.setVerticalGroup(
             signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +205,7 @@ public class LoginScreen extends javax.swing.JDialog {
                 .addGap(37, 37, 37)
                 .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addComponent(toSignUp)
+                .addComponent(toSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -217,7 +217,7 @@ public class LoginScreen extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
         jLabel11.setText("Name");
 
-        closeButton1.setBackground(new java.awt.Color(51, 153, 255));
+        closeButton1.setBackground(new java.awt.Color(54, 104, 141));
         closeButton1.setPreferredSize(new java.awt.Dimension(45, 45));
         closeButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -233,7 +233,7 @@ public class LoginScreen extends javax.swing.JDialog {
         toSignIn.setFont(new java.awt.Font("Corbel", 3, 18)); // NOI18N
         toSignIn.setForeground(new java.awt.Color(102, 102, 102));
         toSignIn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        toSignIn.setText("Already have an account? Sign in!");
+        toSignIn.setText("Already registered? Sign in now!");
         toSignIn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         toSignIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -270,7 +270,7 @@ public class LoginScreen extends javax.swing.JDialog {
 
         clearButton.setBackground(new java.awt.Color(51, 153, 255));
         clearButton.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        clearButton.setText("CLEAN");
+        clearButton.setText("CLEAR");
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearButtonActionPerformed(evt);
@@ -304,19 +304,19 @@ public class LoginScreen extends javax.swing.JDialog {
                     .addComponent(signUp_rePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpLayout.createSequentialGroup()
+                .addContainerGap(329, Short.MAX_VALUE)
+                .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(signUpLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(signUpButton)
                 .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpLayout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
-                .addGroup(signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(closeButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpLayout.createSequentialGroup()
-                        .addComponent(toSignIn)
-                        .addGap(59, 59, 59))))
+            .addGroup(signUpLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(toSignIn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         signUpLayout.setVerticalGroup(
             signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,9 +346,9 @@ public class LoginScreen extends javax.swing.JDialog {
                 .addGroup(signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(toSignIn)
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
 
         parentCardLayout.add(signUp, "card3");

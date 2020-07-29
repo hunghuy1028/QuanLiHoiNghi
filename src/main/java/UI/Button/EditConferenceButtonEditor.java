@@ -34,6 +34,9 @@ public class EditConferenceButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fireEditingStopped();
+                try{
+                    MainScreen.conferenceManagementTableSetting();
+                }catch(Exception exception){};
             }
         });
     }

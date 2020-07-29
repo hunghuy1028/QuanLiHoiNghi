@@ -9,6 +9,7 @@ import DAO.ConferenceDAO;
 import DAO.LocationDAO;
 import POJOs.Conference;
 import POJOs.Location;
+import UI.MainScreen;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -38,6 +39,8 @@ public class addConferenceDialog extends javax.swing.JDialog {
     JDateChooser jdc = new JDateChooser();
     File fileChoose = null;
     int idLocation = 0;
+    static List<Location> locations;
+    
     
     public addConferenceDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -55,20 +58,33 @@ public class addConferenceDialog extends javax.swing.JDialog {
     private void addConference2()
     {
         jLabel6.setText("Add new conference...");
-        List<Location> locations = LocationDAO.getListLocation();
+        locations = LocationDAO.getListLocation();
         for(int l = 0 ; l < locations.size(); l++)
         {
-            jComboBox1.addItem(locations.get(l).getTen());
+            jComboBox1.addItem((l+1)+"-"+locations.get(l).getTen());
         }
-        jComboBox1.addItem("Thêm địa điểm.");
         
         jComboBox1.setSelectedIndex(0);
+        jLabel4.setText("<html><body><b>Max: </b>"+ locations.get(0).getSucChua() +" participants</body></html>");
         jComboBox1.addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED)
             {
                 idLocation = locations.get(jComboBox1.getSelectedIndex()).getIdDiaDiem();
+                jLabel4.setText("<html><body><b>Max: </b>"+ locations.get(jComboBox1.getSelectedIndex()).getSucChua() +" participants</body></html>");
             }
         });
+    }
+    
+    public static void addCombobox()
+    {
+        jComboBox1.removeAllItems();
+        locations = LocationDAO.getListLocation();
+        for(int l = 0 ; l < locations.size(); l++)
+        {
+            jComboBox1.addItem((l+1)+"-"+locations.get(l).getTen());
+        }
+        jComboBox1.setSelectedIndex(0);
+        jLabel4.setText("<html><body><b>Max: </b>"+ locations.get(0).getSucChua() +" participants</body></html>");
     }
 
     /**
@@ -103,6 +119,8 @@ public class addConferenceDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit");
@@ -213,6 +231,16 @@ public class addConferenceDialog extends javax.swing.JDialog {
         JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm");
         jSpinner1.setEditor(de);
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        jLabel4.setText("Max:");
+
+        jButton3.setText("Add");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -237,8 +265,10 @@ public class addConferenceDialog extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel3Layout.createSequentialGroup()
@@ -251,14 +281,15 @@ public class addConferenceDialog extends javax.swing.JDialog {
                                 .addComponent(jLabel5))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSpinner1))
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -277,7 +308,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,12 +321,15 @@ public class addConferenceDialog extends javax.swing.JDialog {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton3))
                             .addComponent(jLabel11))
-                        .addGap(19, 19, 19)
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(browserButton))
@@ -389,7 +423,16 @@ public class addConferenceDialog extends javax.swing.JDialog {
             }else
                 JOptionPane.showMessageDialog(null, "Thêm thất bại. Thử lại sau!");
         }
+        try {
+            MainScreen.conferenceManagementTableSetting();
+        } catch (Exception e) {}
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new addNewLocation(null, true).setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -448,12 +491,14 @@ public class addConferenceDialog extends javax.swing.JDialog {
     private javax.swing.JLabel imageDisplay;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButton3;
+    private static javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private static javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;

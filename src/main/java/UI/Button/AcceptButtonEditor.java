@@ -7,6 +7,7 @@ package UI.Button;
 
 import DAO.AccountConferenceDAO;
 import POJOs.UserHoinghi;
+import UI.MainScreen;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,15 +38,19 @@ public class AcceptButtonEditor extends DefaultCellEditor {
         button.setOpaque(true);
         button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if(table != null)
-                {
-                    fireEditingStopped();
-                    TableModel model = table.getModel();
-                    if (model instanceof DefaultTableModel) {
-                        ((DefaultTableModel) model).removeRow(row);
+            public void actionPerformed(ActionEvent e) {       
+                try {
+                    if(table != null)
+                    {
+                        fireEditingStopped();
+                        TableModel model = table.getModel();
+                        if (model instanceof DefaultTableModel) {
+                            ((DefaultTableModel) model).removeRow(row);
+                        }
                     }
-                }
+                    MainScreen.conferenceManagementTableSetting();
+                } catch (Exception ex) {}
+                fireEditingStopped();
             }
         });
     }

@@ -27,12 +27,9 @@ import UI.Button.NewRequestButtonEditor;
 import UI.Button.NewRequestButtonRenderer;
 import UI.Dialog.addConferenceDialog;
 import UI.Panel.cardViewConference;
-import UI.Panel.statisticRegisterPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
@@ -49,8 +46,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -67,17 +62,18 @@ public class MainScreen extends javax.swing.JFrame {
     Account account = null;
     Conference nowConference = null;
     private static MainScreen MainScreenUI = null;
+    Color mainColor = new Color(54,104,141);
+    int currentScreen = 1;
     
     public MainScreen() {
         initComponents();
         displaySidePanel();
+        setColorSidePanel();
         initDataFromDB();
         settingComponents();
+        
         navigatorPanel.setVisible(false);
-        //userManagementTableSetting();
-        //conferenceManagementTableSetting();
-        //statisticsPanelSetting();
- 
+        homeSidePanel.setBackground(mainColor);
     }
     
     public static MainScreen getInstance()
@@ -114,22 +110,19 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         profileSidePanel = new javax.swing.JPanel();
         profileLabel = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
         signInPanel = new javax.swing.JPanel();
         signInLabel = new javax.swing.JLabel();
         contentPanel = new javax.swing.JPanel();
         navigatorPanel = new javax.swing.JPanel();
         cardViewButton = new javax.swing.JLabel();
         listViewButton = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
         parentCardLayout = new javax.swing.JPanel();
         homePanel = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         homeImage = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
         upcomingText = new javax.swing.JLabel();
+        home_timeLabel = new javax.swing.JLabel();
         conferenceManagementPanel = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -159,7 +152,6 @@ public class MainScreen extends javax.swing.JFrame {
         accountTableScollPane = new javax.swing.JScrollPane();
         accountTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
         listViewScrollPane = new javax.swing.JScrollPane();
         listConferencePanel = new javax.swing.JPanel();
         cardViewScrollPane = new javax.swing.JScrollPane();
@@ -217,7 +209,7 @@ public class MainScreen extends javax.swing.JFrame {
         rootPanel.setBackground(new java.awt.Color(255, 255, 255));
         rootPanel.setPreferredSize(new java.awt.Dimension(1000, 50));
 
-        logoPanel.setBackground(new java.awt.Color(0, 153, 255));
+        logoPanel.setBackground(new java.awt.Color(54, 104, 141));
         logoPanel.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
@@ -227,10 +219,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel1.setText("Conference");
         logoPanel.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        sidePanel.setBackground(new java.awt.Color(0, 153, 153));
+        sidePanel.setBackground(new java.awt.Color(114, 162, 192));
         sidePanel.setLayout(new javax.swing.BoxLayout(sidePanel, javax.swing.BoxLayout.PAGE_AXIS));
 
-        homeSidePanel.setBackground(new java.awt.Color(204, 255, 204));
+        homeSidePanel.setBackground(new java.awt.Color(29, 101, 166));
+        homeSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         homeSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         homeSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         homeSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
@@ -243,13 +236,15 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Home");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         homeSidePanel.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(homeSidePanel);
 
-        conferenceListSidePanel.setBackground(new java.awt.Color(0, 255, 0));
+        conferenceListSidePanel.setBackground(new java.awt.Color(114, 162, 192));
+        conferenceListSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         conferenceListSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         conferenceListSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         conferenceListSidePanel.setPreferredSize(new java.awt.Dimension(125, 45));
@@ -261,13 +256,15 @@ public class MainScreen extends javax.swing.JFrame {
         conferenceListSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Conference List");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         conferenceListSidePanel.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(conferenceListSidePanel);
 
-        statisticsSidePanel.setBackground(new java.awt.Color(0, 204, 204));
+        statisticsSidePanel.setBackground(new java.awt.Color(114, 162, 192));
+        statisticsSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         statisticsSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         statisticsSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         statisticsSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
@@ -279,13 +276,15 @@ public class MainScreen extends javax.swing.JFrame {
         statisticsSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Statistics");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         statisticsSidePanel.add(jLabel4, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(statisticsSidePanel);
 
-        conferenceManagementSidePanel.setBackground(new java.awt.Color(204, 255, 255));
+        conferenceManagementSidePanel.setBackground(new java.awt.Color(114, 162, 192));
+        conferenceManagementSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         conferenceManagementSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         conferenceManagementSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         conferenceManagementSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
@@ -297,13 +296,15 @@ public class MainScreen extends javax.swing.JFrame {
         conferenceManagementSidePanel.setLayout(new java.awt.BorderLayout());
 
         conferenceManagementLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        conferenceManagementLabel.setForeground(new java.awt.Color(255, 255, 255));
         conferenceManagementLabel.setText("Conference Management");
-        conferenceManagementLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        conferenceManagementLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         conferenceManagementSidePanel.add(conferenceManagementLabel, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(conferenceManagementSidePanel);
 
-        userManagementSidePanel.setBackground(new java.awt.Color(153, 255, 255));
+        userManagementSidePanel.setBackground(new java.awt.Color(114, 162, 192));
+        userManagementSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         userManagementSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         userManagementSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         userManagementSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
@@ -315,13 +316,15 @@ public class MainScreen extends javax.swing.JFrame {
         userManagementSidePanel.setLayout(new java.awt.BorderLayout());
 
         jLabel12.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("User Management");
-        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         userManagementSidePanel.add(jLabel12, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(userManagementSidePanel);
 
-        profileSidePanel.setBackground(new java.awt.Color(0, 102, 102));
+        profileSidePanel.setBackground(new java.awt.Color(114, 162, 192));
+        profileSidePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         profileSidePanel.setMaximumSize(new java.awt.Dimension(200, 45));
         profileSidePanel.setMinimumSize(new java.awt.Dimension(200, 45));
         profileSidePanel.setPreferredSize(new java.awt.Dimension(200, 45));
@@ -333,26 +336,14 @@ public class MainScreen extends javax.swing.JFrame {
         profileSidePanel.setLayout(new java.awt.BorderLayout());
 
         profileLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        profileLabel.setForeground(new java.awt.Color(255, 255, 255));
         profileLabel.setText("Profile");
-        profileLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        profileLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
         profileSidePanel.add(profileLabel, java.awt.BorderLayout.CENTER);
 
         sidePanel.add(profileSidePanel);
 
-        jPanel16.setBackground(new java.awt.Color(51, 255, 255));
-        jPanel16.setMaximumSize(new java.awt.Dimension(200, 45));
-        jPanel16.setMinimumSize(new java.awt.Dimension(200, 45));
-        jPanel16.setPreferredSize(new java.awt.Dimension(200, 45));
-        jPanel16.setLayout(new java.awt.BorderLayout());
-
-        jLabel13.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel13.setText("jLabel13");
-        jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jPanel16.add(jLabel13, java.awt.BorderLayout.CENTER);
-
-        sidePanel.add(jPanel16);
-
-        signInPanel.setBackground(new java.awt.Color(0, 204, 0));
+        signInPanel.setBackground(new java.awt.Color(54, 104, 141));
         signInPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         signInPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -361,6 +352,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         signInLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        signInLabel.setForeground(new java.awt.Color(255, 255, 255));
         signInLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user.png"))); // NOI18N
         signInLabel.setText("SIGN IN");
 
@@ -387,11 +379,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         contentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        navigatorPanel.setBackground(new java.awt.Color(255, 255, 204));
+        navigatorPanel.setBackground(new java.awt.Color(189, 165, 137));
         navigatorPanel.setPreferredSize(new java.awt.Dimension(398, 40));
 
         cardViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
-        cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
+        cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 1, 1, 15));
         cardViewButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cardViewButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -400,6 +392,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         listViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/list.png"))); // NOI18N
+        listViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 1));
         listViewButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listViewButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -407,31 +400,23 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setVerifyInputWhenFocusTarget(false);
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/search_b.png"))); // NOI18N
-
         javax.swing.GroupLayout navigatorPanelLayout = new javax.swing.GroupLayout(navigatorPanel);
         navigatorPanel.setLayout(navigatorPanelLayout);
         navigatorPanelLayout.setHorizontalGroup(
             navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navigatorPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addGap(55, 55, 55)
                 .addComponent(listViewButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardViewButton))
         );
         navigatorPanelLayout.setVerticalGroup(
             navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cardViewButton)
-            .addComponent(listViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(navigatorPanelLayout.createSequentialGroup()
+                .addGroup(navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cardViewButton)
+                    .addComponent(listViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         parentCardLayout.setBackground(new java.awt.Color(255, 255, 255));
@@ -452,7 +437,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+            .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
         );
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
@@ -461,19 +446,28 @@ public class MainScreen extends javax.swing.JFrame {
         upcomingText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         upcomingText.setText("Upcoming conference...");
 
+        home_timeLabel.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        home_timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        home_timeLabel.setText("Time");
+
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(upcomingText, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
+            .addComponent(upcomingText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(home_timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 65, Short.MAX_VALUE)
-            .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(upcomingText, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(upcomingText, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(home_timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
@@ -488,7 +482,8 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         parentCardLayout.add(homePanel, "label");
@@ -504,12 +499,14 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel16.setText("Conference Management");
         jPanel15.add(jLabel16, java.awt.BorderLayout.CENTER);
 
+        jScrollPane1.setBackground(new java.awt.Color(228, 235, 242));
+
         conferenceManagementTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Name", "Location", "Time", "Joined", "Pending", "Edit"
+                "ID", "Name", "Location", "Time", "Joined", "Pending", "View/Edit"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -538,6 +535,9 @@ public class MainScreen extends javax.swing.JFrame {
             conferenceManagementTable.getColumnModel().getColumn(6).setPreferredWidth(75);
         }
 
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+
+        addNewConferenceButton.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         addNewConferenceButton.setText("Add a conference");
         addNewConferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -556,10 +556,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addNewConferenceButton)
-                .addContainerGap(26, Short.MAX_VALUE))
+            .addComponent(addNewConferenceButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout conferenceManagementPanelLayout = new javax.swing.GroupLayout(conferenceManagementPanel);
@@ -577,12 +574,12 @@ public class MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
         );
 
         parentCardLayout.add(conferenceManagementPanel, "card8");
 
-        statisticsPanel.setBackground(new java.awt.Color(204, 255, 204));
+        statisticsPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel5.setBackground(new java.awt.Color(54, 104, 141));
 
@@ -610,6 +607,8 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addGap(0, 5, Short.MAX_VALUE)))
         );
+
+        jScrollPane4.setBackground(new java.awt.Color(228, 235, 242));
 
         statisticRegisterTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -648,7 +647,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
         );
 
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
@@ -679,7 +678,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(statisticsPanelLayout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -715,7 +714,7 @@ public class MainScreen extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(228, 235, 242));
 
         jLabel5.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 153, 255));
@@ -782,9 +781,10 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(totalAdminLabel))
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(262, Short.MAX_VALUE))
         );
 
+        accountTableScollPane.setBackground(new java.awt.Color(228, 235, 242));
         accountTableScollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         accountTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -792,11 +792,11 @@ public class MainScreen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Username", "Name", "Email", "Conference Join", "Status"
+                "ID", "Username", "Name", "Email", "Conference", "Role", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -806,21 +806,30 @@ public class MainScreen extends javax.swing.JFrame {
         accountTable.setColumnSelectionAllowed(true);
         accountTableScollPane.setViewportView(accountTable);
         accountTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (accountTable.getColumnModel().getColumnCount() > 0) {
+            accountTable.getColumnModel().getColumn(0).setResizable(false);
+            accountTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+            accountTable.getColumnModel().getColumn(1).setPreferredWidth(60);
+            accountTable.getColumnModel().getColumn(2).setPreferredWidth(70);
+            accountTable.getColumnModel().getColumn(3).setPreferredWidth(120);
+            accountTable.getColumnModel().getColumn(4).setPreferredWidth(60);
+            accountTable.getColumnModel().getColumn(5).setResizable(false);
+            accountTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+            accountTable.getColumnModel().getColumn(6).setResizable(false);
+            accountTable.getColumnModel().getColumn(6).setPreferredWidth(80);
+        }
 
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png"))); // NOI18N
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel19)
-                .addContainerGap())
+            .addGap(0, 609, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+            .addGap(0, 38, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout userManagementPanelLayout = new javax.swing.GroupLayout(userManagementPanel);
@@ -1144,7 +1153,7 @@ public class MainScreen extends javax.swing.JFrame {
                     .addGap(0, 18, Short.MAX_VALUE)))
         );
 
-        jPanel9.setBackground(new java.awt.Color(242, 234, 237));
+        jPanel9.setBackground(new java.awt.Color(228, 235, 242));
 
         profile_emailLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         profile_emailLabel.setText("email");
@@ -1316,7 +1325,7 @@ public class MainScreen extends javax.swing.JFrame {
         contentPanelLayout.setVerticalGroup(
             contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentPanelLayout.createSequentialGroup()
-                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(parentCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1361,7 +1370,10 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void homeSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeSidePanelMouseClicked
         // TODO add your handling code here:
+        currentScreen = 1;
         navigatorPanel.setVisible(false);
+        setColorSidePanel();
+        homeSidePanel.setBackground(mainColor);
         parentCardLayout.removeAll();
         parentCardLayout.add(homePanel);
         parentCardLayout.repaint();
@@ -1371,6 +1383,10 @@ public class MainScreen extends javax.swing.JFrame {
     private void conferenceListSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceListSidePanelMouseClicked
         // TODO add your handling code here:        
         navigatorPanel.setVisible(true);
+        currentScreen = 2;
+        setColorSidePanel();
+        if(account != null) account = AccountDAO.getAccount(account.getIdAccount());
+        conferenceListSidePanel.setBackground(mainColor);
         if(typeView == 1)
         {
             parentCardLayout.removeAll();
@@ -1391,6 +1407,8 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void statisticsSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticsSidePanelMouseClicked
         // TODO add your handling code here:
+        setColorSidePanel();
+        statisticsSidePanel.setBackground(mainColor);
         navigatorPanel.setVisible(false);
         statisticsPanelSetting();
         
@@ -1425,12 +1443,14 @@ public class MainScreen extends javax.swing.JFrame {
             }catch(NullPointerException e){}
             
             displaySidePanel();  
+            if(currentScreen == 1)
+                homeSidePanel.setBackground(mainColor);
+            else conferenceListSidePanel.setBackground(mainColor);
         }
         else
         {
             typeUser = -1;
             account = null;
-            JOptionPane.showMessageDialog(this, "Sign out success!");
             displaySidePanel();
             signInLabel.setText("SIGN IN");
             homeSidePanelMouseClicked(evt);
@@ -1457,6 +1477,8 @@ public class MainScreen extends javax.swing.JFrame {
     private void cardViewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardViewButtonMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(true);
+        setColorSidePanel();
+        conferenceListSidePanel.setBackground(mainColor);
         typeView = 1;
         
         parentCardLayout.removeAll();
@@ -1470,7 +1492,8 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         navigatorPanel.setVisible(true);
         typeView = 0;
-        
+        setColorSidePanel();
+        conferenceListSidePanel.setBackground(mainColor);
         parentCardLayout.removeAll();
         parentCardLayout.add(listViewScrollPane);
         parentCardLayout.repaint();
@@ -1479,11 +1502,17 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void profileSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileSidePanelMouseClicked
         // TODO add your handling code here:
+        setColorSidePanel();
+        profileSidePanel.setBackground(mainColor);
         if(account != null)
         {
             if(typeUser == 0)
             {
                 yourProfileLabel.setText("Admin profile");
+            }
+            else
+            {
+                yourProfileLabel.setText("Your profile");
             }
             profile_usrnameLabel.setText(account.getUsername());
             profile_nameLabel.setText(account.getTen());
@@ -1608,7 +1637,9 @@ public class MainScreen extends javax.swing.JFrame {
     private void conferenceManagementSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceManagementSidePanelMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(false);
+        setColorSidePanel();
         conferenceManagementTableSetting();
+        conferenceManagementSidePanel.setBackground(mainColor);
         parentCardLayout.removeAll();
         parentCardLayout.add(conferenceManagementPanel);
         parentCardLayout.repaint();
@@ -1618,7 +1649,9 @@ public class MainScreen extends javax.swing.JFrame {
     private void userManagementSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userManagementSidePanelMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(false);
+        setColorSidePanel();
         userManagementTableSetting();
+        userManagementSidePanel.setBackground(mainColor);
         parentCardLayout.removeAll();
         parentCardLayout.add(userManagementPanel);
         parentCardLayout.repaint();
@@ -1763,14 +1796,17 @@ public class MainScreen extends javax.swing.JFrame {
         // not logged in
             case -1:
                 setStateSidePanel(false);
+                setColorSidePanel();
                 break;
         // admin
             case 0:
                 setStateSidePanel(true);
+                setColorSidePanel();
                 break;
         // user
             case 1:
                 setStateSidePanel(false);
+                setColorSidePanel();
                 statisticsSidePanel.setVisible(true);
                 profileSidePanel.setVisible(true);
                 break;
@@ -1780,12 +1816,22 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     private void setStateSidePanel(boolean b)
-    {
-        jPanel16.setVisible(b);
+    {     
         statisticsSidePanel.setVisible(b);
-        conferenceManagementSidePanel.setVisible(b);
+        conferenceManagementSidePanel.setVisible(b); 
         userManagementSidePanel.setVisible(b);
-        profileSidePanel.setVisible(b);
+        profileSidePanel.setVisible(b); 
+    }
+    
+    private void setColorSidePanel()
+    {
+        Color color = new Color(114, 162, 192);
+        statisticsSidePanel.setBackground(color);
+        conferenceListSidePanel.setBackground(color);
+        conferenceManagementSidePanel.setBackground(color);
+        userManagementSidePanel.setBackground(color);
+        profileSidePanel.setBackground(color);
+        homeSidePanel.setBackground(color);
     }
     
     private void initDataFromDB()
@@ -1858,6 +1904,8 @@ public class MainScreen extends javax.swing.JFrame {
         }catch(NullPointerException ex){}
         
         upcomingText.setText("<html><body>Upcoming Conference: <b>"+c.getTen()+"</b></body></html>");
+        String t = SupportFile.getCustomTimeString(c.getThoiGian());
+        home_timeLabel.setText(t);
         homeImage.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1871,32 +1919,13 @@ public class MainScreen extends javax.swing.JFrame {
             
         });
         
-        jTextField1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-               if(jTextField1.getText().equals("Search..."))
-               {
-                   jTextField1.setText("");
-                   jTextField1.setForeground(Color.BLACK);
-               }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(jTextField1.getText().isEmpty())
-                {
-                    jTextField1.setForeground(Color.gray);
-                    jTextField1.setText("Search...");
-                }
-                
-            }
-        });
         navigatorPanel.setFocusable(false);
         
         //sort table
         accountTable.setAutoCreateRowSorter(true);
         conferenceManagementTable.setAutoCreateRowSorter(true);
         statisticRegisterTable.setAutoCreateRowSorter(true);
+        //TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(accountTable.getModel());
         
         //setting for Conference Management Table
         ((DefaultTableCellRenderer)conferenceManagementTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
@@ -1909,8 +1938,8 @@ public class MainScreen extends javax.swing.JFrame {
         //setting for Account Management Table
         ((DefaultTableCellRenderer)accountTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         accountTable.setRowHeight(40);
-        accountTable.getColumnModel().getColumn(5).setCellRenderer(new BlockButtonRenderer());
-        accountTable.getColumnModel().getColumn(5).setCellEditor(new BlockButtonEditor(new JTextField()));
+        accountTable.getColumnModel().getColumn(6).setCellRenderer(new BlockButtonRenderer());
+        accountTable.getColumnModel().getColumn(6).setCellEditor(new BlockButtonEditor(new JTextField()));
         
         //setting for Statistic Register Table
         ((DefaultTableCellRenderer)statisticRegisterTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
@@ -1924,25 +1953,34 @@ public class MainScreen extends javax.swing.JFrame {
     private void userManagementTableSetting()
     {
         DefaultTableModel tableModel = (DefaultTableModel)accountTable.getModel();       
-        tableModel.setRowCount(0);
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
         
         List<Account> listAccounts = AccountDAO.getListAccount();             
         for(int i = 0; i<listAccounts.size(); i++)
         {
             Account temp = listAccounts.get(i);
             int joined = AccountBUS.getNumberOfConferenceUserJoined(temp);
-            tableModel.addRow(new Object[]{temp.getIdAccount(), temp.getUsername(), temp.getTen(), temp.getEmail(), joined, temp});
+            tableModel.addRow(new Object[]{temp.getIdAccount(), temp.getUsername(), temp.getTen(), temp.getEmail(), joined,
+                temp.getAccountType()==0 ? "Admin":"User", temp});
         }
+        updateDataOfAccount();
+    }
+    
+    public static void updateDataOfAccount()
+    {
+        List<Account> listAccounts = AccountDAO.getListAccount();
         int x = AccountBUS.getNumberNormalUser();
         int y = AccountBUS.getActiveNormalUser();
         totalUserLabel.setText(String.valueOf(x));
         totalblockedUserLabel.setText(String.valueOf(x - y));
-        totalAdminLabel.setText(String.valueOf(listAccounts.size() - x));        
+        totalAdminLabel.setText(String.valueOf(listAccounts.size() - x));   
     }
        
-    private void conferenceManagementTableSetting() {
+    public static void conferenceManagementTableSetting() {
         DefaultTableModel tableModel = (DefaultTableModel)conferenceManagementTable.getModel();
-        tableModel.setRowCount(0);
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
         
         List<Conference> listConferences = ConferenceDAO.getListConference();
 
@@ -1961,13 +1999,15 @@ public class MainScreen extends javax.swing.JFrame {
             }
             tableModel.addRow(new Object[]{temp.getIdHoiNghi(), temp.getTen(), location, date, joined, temp, temp.getIdHoiNghi()});
         }
+        tableModel.fireTableDataChanged();
         
     }
     
     private void statisticsPanelSetting()
     {      
         DefaultTableModel tableModel = (DefaultTableModel)statisticRegisterTable.getModel();
-        tableModel.setRowCount(0);
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
         
         account = AccountDAO.getAccount(account.getIdAccount());
         int k = 0;
@@ -1977,8 +2017,14 @@ public class MainScreen extends javax.swing.JFrame {
             String timeString = SupportFile.getCustomTimeString(con.getThoiGian());
             k++;
             String status = next.getStatus() == 1 ? "Accepted" : "Pending";
-            tableModel.addRow(new Object[]{k, con.getTen(), timeString, status, next,con.getIdHoiNghi()});
+            tableModel.addRow(new Object[]{k, con.getTen(), timeString, status, next, con.getIdHoiNghi()});
         }
+        
+//        if (k == 0)
+//        {
+//            tableModel.addRow(new Object[]{0, "You haven't join to any conference"});
+//        }
+        
         
         statisticRegisterTable.addMouseListener(new MouseAdapter() {
             @Override
@@ -1994,18 +2040,8 @@ public class MainScreen extends javax.swing.JFrame {
                     parentCardLayout.repaint();
                     parentCardLayout.revalidate();
                 }
-            }
-            
+            } 
         });
-        
-        int con = AccountBUS.getNumberOfConferenceUserJoined(account);
-        if(con == 0)
-        {
-            jPanel19.removeAll();
-            JLabel jlb = new JLabel("You haven't join to any conference!");         
-            jPanel19.add(jlb, BorderLayout.CENTER); 
-        }
-        
     }
     
     private void resetAllData()
@@ -2077,7 +2113,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel conferenceManagementLabel;
     private javax.swing.JPanel conferenceManagementPanel;
     private javax.swing.JPanel conferenceManagementSidePanel;
-    private javax.swing.JTable conferenceManagementTable;
+    private static javax.swing.JTable conferenceManagementTable;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel detailAccpectLabel;
     private javax.swing.JPanel detailConferencePanel;
@@ -2091,15 +2127,13 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel homeImage;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homeSidePanel;
+    private javax.swing.JLabel home_timeLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -2125,7 +2159,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
@@ -2145,7 +2178,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton joinNowButton;
     private javax.swing.JPanel listConferencePanel;
     private javax.swing.JLabel listViewButton;
@@ -2171,9 +2203,9 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTable statisticRegisterTable;
     private javax.swing.JPanel statisticsPanel;
     private javax.swing.JPanel statisticsSidePanel;
-    private javax.swing.JLabel totalAdminLabel;
-    private javax.swing.JLabel totalUserLabel;
-    private javax.swing.JLabel totalblockedUserLabel;
+    private static javax.swing.JLabel totalAdminLabel;
+    private static javax.swing.JLabel totalUserLabel;
+    private static javax.swing.JLabel totalblockedUserLabel;
     private javax.swing.JLabel upcomingText;
     private javax.swing.JPanel userManagementPanel;
     private javax.swing.JPanel userManagementSidePanel;

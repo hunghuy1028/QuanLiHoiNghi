@@ -10,16 +10,9 @@ import POJOs.Conference;
 import POJOs.UserHoinghi;
 import UI.Button.AcceptButtonRenderer;
 import UI.Button.AcceptButtonEditor;
-import UI.MainScreen;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *

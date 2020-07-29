@@ -15,6 +15,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +26,7 @@ public class NewRequestButtonEditor extends DefaultCellEditor {
     private JButton button;
     private boolean clicked;
     private Conference conference;
+    JTable table;
     
     public NewRequestButtonEditor(JTextField jtf) {
         super(jtf);
@@ -35,6 +37,7 @@ public class NewRequestButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fireEditingStopped();
+                
             }
         });
     }
@@ -42,6 +45,7 @@ public class NewRequestButtonEditor extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         Conference conference2 = (Conference) value;
+        this.table = table;
         this.conference = conference2;
         button.setText("Accepting...");
         clicked = true;
@@ -59,6 +63,7 @@ public class NewRequestButtonEditor extends DefaultCellEditor {
         if(clicked)
         {
             new RequestUserDialog(MainScreen.getInstance(), true, conference).setVisible(true);
+            
         }
         clicked = false;
         return conference;
