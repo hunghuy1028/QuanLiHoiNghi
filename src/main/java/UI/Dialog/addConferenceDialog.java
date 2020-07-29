@@ -17,6 +17,7 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -47,9 +48,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
         initComponents();
         dateText.setLayout(new BorderLayout());
         dateText.add(jdc, BorderLayout.EAST);
-        
-        
-        
+        jdc.setCalendar(Calendar.getInstance());
         addConference2();
     }
     
@@ -57,12 +56,15 @@ public class addConferenceDialog extends javax.swing.JDialog {
     
     private void addConference2()
     {
+        imageDisplay.setToolTipText("Please put an image to resource project first.");
+        browserButton.setToolTipText("Please put an image to resource project first.");
         jLabel6.setText("Add new conference...");
         locations = LocationDAO.getListLocation();
         for(int l = 0 ; l < locations.size(); l++)
         {
             jComboBox1.addItem((l+1)+"-"+locations.get(l).getTen());
         }
+        idLocation = locations.get(0).getIdDiaDiem();
         
         jComboBox1.setSelectedIndex(0);
         jLabel4.setText("<html><body><b>Max: </b>"+ locations.get(0).getSucChua() +" participants</body></html>");
@@ -123,7 +125,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Edit");
+        setTitle("Add new conference");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -169,7 +171,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
         jScrollPane2.setViewportView(briefDes_text);
 
         participantsText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        participantsText.setText("0");
+        participantsText.setText("5");
 
         jLabel5.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         jLabel5.setText("Time:");
@@ -398,35 +400,71 @@ public class addConferenceDialog extends javax.swing.JDialog {
         calendarSave.set(Calendar.MINUTE, hourSave.get(Calendar.MINUTE));
         calendarSave.set(Calendar.SECOND, 0);
         
-        
-        conference.setTen(nameText.getText());
-        conference.setMoTaNgan(briefDes_text.getText());
-        conference.setMoTaChiTiet(detailDes_text.getText());
-        conference.setThoiGian(calendarSave.getTime());
-        conference.setHinhAnh("/Images/" + fileChoose.getName());
-        Location locationCurrent = LocationDAO.getLocation(idLocation);
-        int currentParticipants = Integer.valueOf(participantsText.getText());
-        
-        if(currentParticipants > locationCurrent.getSucChua())
+        if(nameText.getText().isEmpty() || briefDes_text.getText().isEmpty() || detailDes_text.getText().isEmpty()
+                || participantsText.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Số người tham dự phải ít hơn sức chứa của địa điểm này ("+locationCurrent.getSucChua()+" người)");
+            JOptionPane.showMessageDialog(null, "Please fill all fields");
+            return;
         }
         else
         {
-            conference.setNgThamDu(currentParticipants);
-            conference.setLocation(locationCurrent);
-        
-            boolean kq = ConferenceDAO.addConference(conference);
-            if(kq)
+            try {
+                conference.setTen(nameText.getText());
+                conference.setMoTaNgan(briefDes_text.getText());
+                conference.setMoTaChiTiet(detailDes_text.getText());
+                conference.setThoiGian(calendarSave.getTime());
+                conference.setHinhAnh("/Images/" + fileChoose.getName());
+                Location locationCurrent = LocationDAO.getLocation(idLocation);
+                boolean isSameDay = false;
+                
+                for(Iterator<Conference> confernceIterator = locationCurrent.getConferences().iterator(); 
+                        confernceIterator.hasNext();)
+                {
+                    Conference cNext = confernceIterator.next();
+                    Calendar cCalendar = Calendar.getInstance();
+                    cCalendar.setTime(cNext.getThoiGian());
+                    isSameDay = (calendarSave.get(Calendar.YEAR) == cCalendar.get(Calendar.YEAR))
+                            && (calendarSave.get(Calendar.DAY_OF_YEAR) == cCalendar.get(Calendar.DAY_OF_YEAR));
+                    
+                }
+                
+                int currentParticipants = Integer.valueOf(participantsText.getText());
+
+                if(currentParticipants > locationCurrent.getSucChua())
+                {
+                    JOptionPane.showMessageDialog(null, "Số người tham dự phải ít hơn sức chứa của địa điểm này ("+
+                            locationCurrent.getSucChua()+" người)");
+                }
+                else
+                {
+                    if(isSameDay)
+                    {
+                        JOptionPane.showMessageDialog(null, "This place have a conference on this day. Please choose another day or another place!");
+                    }
+                    else
+                    {
+                        conference.setNgThamDu(currentParticipants);
+                        conference.setLocation(locationCurrent);
+
+                        boolean kq = ConferenceDAO.addConference(conference);
+                        if(kq)
+                        {
+                            JOptionPane.showMessageDialog(null, "Add success");
+                        }else
+                            JOptionPane.showMessageDialog(null, "Fail. Try later!");
+                    }   
+                }
+                try {
+                    MainScreen.conferenceManagementTableSetting();
+                } catch (Exception e) {}
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter correct number");
+            } catch (NullPointerException ex)
             {
-                JOptionPane.showMessageDialog(null, "Thêm thành công");
-            }else
-                JOptionPane.showMessageDialog(null, "Thêm thất bại. Thử lại sau!");
-        }
-        try {
-            MainScreen.conferenceManagementTableSetting();
-        } catch (Exception e) {}
-        
+                JOptionPane.showMessageDialog(null, "Please choose image");
+           }
+        }       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

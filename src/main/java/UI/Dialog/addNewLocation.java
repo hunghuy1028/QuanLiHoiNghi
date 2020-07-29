@@ -83,6 +83,8 @@ public class addNewLocation extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel4.setText("Capacity");
 
+        jTextField3.setText("5");
+
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("CLOSE");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

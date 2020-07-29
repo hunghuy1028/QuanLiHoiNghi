@@ -64,6 +64,8 @@ public class MainScreen extends javax.swing.JFrame {
     private static MainScreen MainScreenUI = null;
     Color mainColor = new Color(54,104,141);
     int currentScreen = 1;
+    int managementClick = 0;
+    int currentClick = 0;
     
     public MainScreen() {
         initComponents();
@@ -379,11 +381,12 @@ public class MainScreen extends javax.swing.JFrame {
 
         contentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        navigatorPanel.setBackground(new java.awt.Color(189, 165, 137));
+        navigatorPanel.setBackground(new java.awt.Color(255, 255, 255));
+        navigatorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         navigatorPanel.setPreferredSize(new java.awt.Dimension(398, 40));
 
         cardViewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/grid.png"))); // NOI18N
-        cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 1, 1, 15));
+        cardViewButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 15));
         cardViewButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cardViewButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1035,12 +1038,12 @@ public class MainScreen extends javax.swing.JFrame {
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 43, Short.MAX_VALUE)
             .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel18Layout.createSequentialGroup()
-                    .addGap(0, 7, Short.MAX_VALUE)
+                    .addGap(0, 8, Short.MAX_VALUE)
                     .addComponent(jLabel7)
-                    .addGap(0, 7, Short.MAX_VALUE)))
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
 
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -1051,7 +1054,6 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane3)
                 .addContainerGap())
             .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1060,12 +1062,13 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
             .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel17Layout.createSequentialGroup()
                     .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 146, Short.MAX_VALUE)))
+                    .addGap(0, 186, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout detailConferencePanelLayout = new javax.swing.GroupLayout(detailConferencePanel);
@@ -1385,6 +1388,11 @@ public class MainScreen extends javax.swing.JFrame {
         navigatorPanel.setVisible(true);
         currentScreen = 2;
         setColorSidePanel();
+        if(currentClick != managementClick)
+        {
+            initDataFromDB();
+            currentClick++;
+        }
         if(account != null) account = AccountDAO.getAccount(account.getIdAccount());
         conferenceListSidePanel.setBackground(mainColor);
         if(typeView == 1)
@@ -1637,6 +1645,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void conferenceManagementSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conferenceManagementSidePanelMouseClicked
         // TODO add your handling code here:
         navigatorPanel.setVisible(false);
+        if(managementClick == currentClick) managementClick++;
         setColorSidePanel();
         conferenceManagementTableSetting();
         conferenceManagementSidePanel.setBackground(mainColor);
@@ -2020,10 +2029,6 @@ public class MainScreen extends javax.swing.JFrame {
             tableModel.addRow(new Object[]{k, con.getTen(), timeString, status, next, con.getIdHoiNghi()});
         }
         
-//        if (k == 0)
-//        {
-//            tableModel.addRow(new Object[]{0, "You haven't join to any conference"});
-//        }
         
         
         statisticRegisterTable.addMouseListener(new MouseAdapter() {

@@ -17,7 +17,7 @@
         <property name="sucChua" type="int">
             <column name="SucChua" not-null="true" />
         </property>
-        <set name="conferences" table="conference" inverse="true" lazy="true" fetch="select">
+        <set name="conferences" table="conference" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="DiaDiem" not-null="true" />
             </key>
