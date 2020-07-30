@@ -49,6 +49,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
         dateText.setLayout(new BorderLayout());
         dateText.add(jdc, BorderLayout.EAST);
         jdc.setCalendar(Calendar.getInstance());
+        jdc.setMinSelectableDate(new Date());
         addConference2();
     }
     
@@ -62,7 +63,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
         locations = LocationDAO.getListLocation();
         for(int l = 0 ; l < locations.size(); l++)
         {
-            jComboBox1.addItem((l+1)+"-"+locations.get(l).getTen());
+            jComboBox1.addItem((l+1)+" - "+locations.get(l).getTen());
         }
         idLocation = locations.get(0).getIdDiaDiem();
         
@@ -413,8 +414,9 @@ public class addConferenceDialog extends javax.swing.JDialog {
                 conference.setMoTaNgan(briefDes_text.getText());
                 conference.setMoTaChiTiet(detailDes_text.getText());
                 conference.setThoiGian(calendarSave.getTime());
-                conference.setHinhAnh("/Images/" + fileChoose.getName());
+                conference.setHinhAnh(fileChoose.getAbsolutePath());
                 Location locationCurrent = LocationDAO.getLocation(idLocation);
+                System.out.println(locationCurrent.getIdDiaDiem());
                 boolean isSameDay = false;
                 
                 for(Iterator<Conference> confernceIterator = locationCurrent.getConferences().iterator(); 
@@ -432,8 +434,8 @@ public class addConferenceDialog extends javax.swing.JDialog {
 
                 if(currentParticipants > locationCurrent.getSucChua())
                 {
-                    JOptionPane.showMessageDialog(null, "Số người tham dự phải ít hơn sức chứa của địa điểm này ("+
-                            locationCurrent.getSucChua()+" người)");
+                    JOptionPane.showMessageDialog(null, "Number of participants must be smaller than capacity of this location ("
+                            +locationCurrent.getSucChua()+" people)");
                 }
                 else
                 {

@@ -12,16 +12,16 @@
             <column name="DiaDiem" not-null="true" />
         </many-to-one>
         <property name="ten" type="string">
-            <column name="Ten" length="100" not-null="true" />
+            <column name="Ten" length="500" not-null="true" />
         </property>
         <property name="moTaNgan" type="string">
-            <column name="MoTaNgan" length="200" not-null="true" />
+            <column name="MoTaNgan" length="1000" not-null="true" />
         </property>
         <property name="moTaChiTiet" type="string">
-            <column name="MoTaChiTiet" length="1000" not-null="true" />
+            <column name="MoTaChiTiet" length="4000" not-null="true" />
         </property>
         <property name="hinhAnh" type="string">
-            <column name="HinhAnh" length="100" not-null="true" />
+            <column name="HinhAnh" length="500" not-null="true" />
         </property>
         <property name="thoiGian" type="timestamp">
             <column name="ThoiGian" length="19" not-null="true" />

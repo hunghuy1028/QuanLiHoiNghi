@@ -40,6 +40,23 @@ public class CancelButtonEditor extends DefaultCellEditor{
             @Override
             public void actionPerformed(ActionEvent e) {
                 fireEditingStopped();
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure to unjoin this conference?");
+                if(option == JOptionPane.YES_OPTION)
+                {
+                    boolean kq = AccountConferenceDAO.deleteConferenceAndAccount(usrHn);
+                    if(!kq) JOptionPane.showMessageDialog(null, "Fail");
+                    else
+                    {
+                        DefaultTableModel model = (DefaultTableModel)table.getModel();
+                        int r = table.getSelectedRow();
+                        r = table.convertRowIndexToModel(r);
+                        model.removeRow(r);
+                        for(int i = row; i<model.getRowCount(); i++)
+                        {
+                            model.setValueAt(i+1, i, 0);
+                        }
+                    }
+                }
             }
         });
         
@@ -72,25 +89,7 @@ public class CancelButtonEditor extends DefaultCellEditor{
     public Object getCellEditorValue() {
         
         if (clicked && check) {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure to unjoin this conference?");
-            if(option == JOptionPane.YES_OPTION)
-            {
-                boolean kq = AccountConferenceDAO.deleteConferenceAndAccount(usrHn);
-                if(!kq) JOptionPane.showMessageDialog(null, "Fail");
-                else
-                {
-                    DefaultTableModel model = (DefaultTableModel)table.getModel();
-                    int r = table.getSelectedRow();
-                    r = table.convertRowIndexToModel(r);
-                    model.removeRow(r);
-                    try {
-                        for(int i = row; i<model.getRowCount(); i++)
-                        {
-                            model.setValueAt(i+1, i, 0);
-                        }
-                    } catch (IndexOutOfBoundsException e) {} 
-                }
-            }
+            
         }
         
         clicked = false;       

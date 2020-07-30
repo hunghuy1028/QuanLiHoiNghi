@@ -9,16 +9,16 @@
             <generator class="identity" />
         </id>
         <property name="ten" type="string">
-            <column name="Ten" length="45" not-null="true" />
+            <column name="Ten" length="100" not-null="true" />
         </property>
         <property name="username" type="string">
-            <column name="Username" length="45" not-null="true" />
+            <column name="Username" length="100" not-null="true" />
         </property>
         <property name="password" type="string">
-            <column name="Password" length="45" not-null="true" />
+            <column name="Password" length="100" not-null="true" />
         </property>
         <property name="email" type="string">
-            <column name="Email" length="45" not-null="true" />
+            <column name="Email" length="100" not-null="true" />
         </property>
         <property name="accountType" type="int">
             <column name="accountType" not-null="true">

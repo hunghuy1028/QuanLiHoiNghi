@@ -22,6 +22,8 @@ public class RequestUserDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form RequestUserDialog
+     * @param parent
+     * @param modal
      */
     public RequestUserDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -31,6 +33,8 @@ public class RequestUserDialog extends javax.swing.JDialog {
     public RequestUserDialog(java.awt.Frame parent, boolean modal, Conference conference) {
         super(parent, modal);
         initComponents();
+        
+        this.setTitle("Accept request: " + conference.getTen());
         
         jTable1.getColumnModel().getColumn(2).setCellRenderer(new AcceptButtonRenderer());
         jTable1.getColumnModel().getColumn(2).setCellEditor(new AcceptButtonEditor(new JTextField()));

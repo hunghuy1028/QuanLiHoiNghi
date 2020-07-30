@@ -11,7 +11,6 @@ import POJOs.Account;
 import POJOs.Conference;
 import POJOs.Location;
 import POJOs.UserHoinghi;
-import UI.MainScreen;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -21,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -59,6 +59,7 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
         initComponents();
         dateText.setLayout(new BorderLayout());
         dateText.add(jdc, BorderLayout.EAST);
+        jdc.setMinSelectableDate(new Date());
         conference = ConferenceDAO.getConference(idHoiNghi);
         editConference();
     }
@@ -77,7 +78,7 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
         imageDisplay.setText("");
         try
         {
-            ImageIcon newImg = new ImageIcon(new ImageIcon(getClass().getResource(conference.getHinhAnh()))
+            ImageIcon newImg = new ImageIcon(new ImageIcon(conference.getHinhAnh())
                     .getImage().getScaledInstance(260, 150, Image.SCALE_DEFAULT));
             imageDisplay.setIcon(newImg);
         }catch(NullPointerException ex){
@@ -114,18 +115,28 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
         locations = LocationDAO.getListLocation();
         for(int l = 0 ; l < locations.size(); l++)
         {
-            jComboBox1.addItem((l+1)+"-"+locations.get(l).getTen());
+            jComboBox1.addItem((l+1)+" - "+locations.get(l).getTen());
         }
         //jComboBox1.addItem("Thêm địa điểm.");
         idLocation = conference.getLocation().getIdDiaDiem();
         Location lc = conference.getLocation();
-        jComboBox1.setSelectedItem(lc.getTen());
-        jLabel4.setText("<html><body>"+lc.getDiaChi()+"<br> Max: "+lc.getSucChua()+" participants"+"</body></html>");
+        
+        for(int m=0; m<locations.size(); m++)
+        {
+            if(locations.get(m).getIdDiaDiem() == idLocation)
+            {
+                jComboBox1.setSelectedIndex(m);
+                break;
+            }
+        }
+        
+        
+        jLabel4.setText("<html><body>"+lc.getDiaChi()+"<br> <b>Max: "+lc.getSucChua()+" participants</b>"+"</body></html>");
         jComboBox1.addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED)
             {
                 Location l = locations.get(jComboBox1.getSelectedIndex());
-                jLabel4.setText("<html><body>"+l.getDiaChi()+"<br> Max: "+l.getSucChua()+" participants"+"</body></html>");
+                jLabel4.setText("<html><body>"+l.getDiaChi()+"<br> <b>Max: "+l.getSucChua()+" participants</b>"+"</body></html>");
                 idLocation = l.getIdDiaDiem();
             }
         });
@@ -142,7 +153,7 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
         idLocation = conference.getLocation().getIdDiaDiem();
         Location lc = conference.getLocation();
         jComboBox1.setSelectedItem(lc.getTen());
-        jLabel4.setText("<html><body>"+lc.getDiaChi()+"<br> Max: "+lc.getSucChua()+" participants"+"</body></html>");
+        jLabel4.setText("<html><body>"+lc.getDiaChi()+"<br><b>Max: "+lc.getSucChua()+" participants</b>"+"</body></html>");
     }
 
     /**
@@ -304,9 +315,7 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
                                 .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(participantsText, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(37, 37, 37)
@@ -366,7 +375,15 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
             new String [] {
                 "S.No", "ID Account", "Username", "Name"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(totalParicipantTable);
         if (totalParicipantTable.getColumnModel().getColumnCount() > 0) {
             totalParicipantTable.getColumnModel().getColumn(0).setResizable(false);
@@ -519,7 +536,7 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
                 conference.setThoiGian(calendarSave.getTime());
                 if(fileChoose != null)
                 {
-                    conference.setHinhAnh("/Images/" + fileChoose.getName());
+                    conference.setHinhAnh(fileChoose.getAbsolutePath());
                 }
                 Location locationCurrent = LocationDAO.getLocation(idLocation);
                 boolean isSameDay = false;
@@ -528,17 +545,22 @@ public class conferenceManagementDialog extends javax.swing.JDialog {
                         confernceIterator.hasNext();)
                 {
                     Conference cNext = confernceIterator.next();
-                    Calendar cCalendar = Calendar.getInstance();
-                    cCalendar.setTime(cNext.getThoiGian());
-                    isSameDay = (calendarSave.get(Calendar.YEAR) == cCalendar.get(Calendar.YEAR))
+                    if(!Objects.equals(cNext.getIdHoiNghi(), conference.getIdHoiNghi()))
+                    {
+                        Calendar cCalendar = Calendar.getInstance();
+                        cCalendar.setTime(cNext.getThoiGian());
+                        isSameDay = (calendarSave.get(Calendar.YEAR) == cCalendar.get(Calendar.YEAR))
                             && (calendarSave.get(Calendar.DAY_OF_YEAR) == cCalendar.get(Calendar.DAY_OF_YEAR));
+                    }
+                    
                     
                 }
                 int currentParticipants = Integer.valueOf(participantsText.getText());
 
                 if(currentParticipants > locationCurrent.getSucChua())
                 {
-                    JOptionPane.showMessageDialog(null, "Số người tham dự phải ít hơn sức chứa của địa điểm này ("+locationCurrent.getSucChua()+" người)");
+                    JOptionPane.showMessageDialog(null, "Number of participants must be smaller than capacity of this location ("
+                            +locationCurrent.getSucChua()+" people)");
                 }
                 else
                 {

@@ -48,7 +48,7 @@ public class listViewConference extends javax.swing.JPanel {
 
         try
         {
-            ImageIcon img = new javax.swing.ImageIcon(getClass().getResource(imageConference));
+            ImageIcon img = new javax.swing.ImageIcon(imageConference);
             Image newImg = img.getImage().getScaledInstance(200, 140, Image.SCALE_DEFAULT);
             ImageIcon setLabel = new ImageIcon(newImg);
             imgLabel.setIcon(setLabel);
@@ -84,7 +84,7 @@ public class listViewConference extends javax.swing.JPanel {
         memberLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setMaximumSize(new java.awt.Dimension(32767, 129));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -160,7 +160,7 @@ public class listViewConference extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );

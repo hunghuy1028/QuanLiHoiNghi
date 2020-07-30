@@ -1,5 +1,4 @@
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Button\NewRequestButtonEditor.java
-E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Panel\statisticRegisterPanel.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Button\EditConferenceButtonEditor.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\DAO\HibernateUtil.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\BUS\ConferenceBUS.java
@@ -24,10 +23,11 @@ E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\MainScreen.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Dialog\RequestUserDialog.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\POJOs\Location.java
+E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Dialog\addNewLocation.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Button\EditButtonRenderer.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Dialog\addConferenceDialog.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\test\test.java
-E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Panel\userManagement.java
+E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Dialog\addNewLocation2.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\BUS\AccountBUS.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\Button\BlockButtonRenderer.java
 E:\HCMUS_Document\Studying\Nam 3\HK2\LTJava\Labs\QuanLiHoiNghi\src\main\java\UI\LoginScreen.java

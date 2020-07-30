@@ -143,6 +143,7 @@ public class LoginScreen extends javax.swing.JDialog {
         });
 
         closeButton0.setBackground(new java.awt.Color(54, 104, 141));
+        closeButton0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         closeButton0.setPreferredSize(new java.awt.Dimension(45, 45));
         closeButton0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,6 +221,7 @@ public class LoginScreen extends javax.swing.JDialog {
         jLabel11.setText("Name");
 
         closeButton1.setBackground(new java.awt.Color(54, 104, 141));
+        closeButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         closeButton1.setPreferredSize(new java.awt.Dimension(45, 45));
         closeButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
