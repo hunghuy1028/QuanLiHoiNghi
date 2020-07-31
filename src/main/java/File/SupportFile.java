@@ -45,6 +45,9 @@ public class SupportFile {
         int year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        return String.format(day + "/" + month + "/" + year + " " + hour + ":" + minute);
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String dayString = day < 10 ? "0"+day : ""+day;
+        String monthString = month < 10 ? "0"+month : ""+month;
+        return String.format(dayString + "/" + monthString + "/" + year + " " + hour + ":" + minuteString);
     }
 }

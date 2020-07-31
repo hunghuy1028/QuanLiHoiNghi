@@ -198,6 +198,10 @@ public class addConferenceDialog extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         jLabel11.setText("Location:");
 
+        jComboBox1.setMaximumSize(new java.awt.Dimension(160, 20));
+        jComboBox1.setMinimumSize(new java.awt.Dimension(160, 20));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(160, 20));
+
         jLabel12.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         jLabel12.setText("Image");
 
@@ -284,7 +288,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
                                 .addComponent(jLabel5))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -452,6 +456,7 @@ public class addConferenceDialog extends javax.swing.JDialog {
                         if(kq)
                         {
                             JOptionPane.showMessageDialog(null, "Add success");
+                            this.dispose();
                         }else
                             JOptionPane.showMessageDialog(null, "Fail. Try later!");
                     }   

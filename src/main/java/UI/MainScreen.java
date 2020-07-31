@@ -160,7 +160,8 @@ public class MainScreen extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jPanel16 = new javax.swing.JPanel();
-        detailShortDesLabel = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        detailShortDesLabel = new javax.swing.JTextArea();
         statisticsPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -462,18 +463,25 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
+            .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(homeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel21.setMaximumSize(new java.awt.Dimension(795, 32767));
+        jPanel21.setMinimumSize(new java.awt.Dimension(795, 0));
 
-        upcomingText.setFont(new java.awt.Font("Calibri", 0, 36)); // NOI18N
+        upcomingText.setFont(new java.awt.Font("Calibri", 0, 30)); // NOI18N
         upcomingText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         upcomingText.setText("Upcoming conference...");
+        upcomingText.setMaximumSize(new java.awt.Dimension(795, 37));
+        upcomingText.setMinimumSize(new java.awt.Dimension(795, 37));
+        upcomingText.setPreferredSize(new java.awt.Dimension(795, 37));
 
         home_timeLabel.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         home_timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -483,20 +491,18 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(upcomingText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(home_timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(upcomingText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(upcomingText, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(upcomingText, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(home_timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(home_timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
@@ -602,6 +608,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setMaximumSize(new java.awt.Dimension(795, 2147483647));
         jPanel8.setPreferredSize(new java.awt.Dimension(794, 50));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
@@ -609,6 +616,9 @@ public class MainScreen extends javax.swing.JFrame {
         detailNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         detailNameLabel.setText("Name of Conference");
         detailNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        detailNameLabel.setMaximumSize(new java.awt.Dimension(795, 80));
+        detailNameLabel.setMinimumSize(new java.awt.Dimension(795, 80));
+        detailNameLabel.setPreferredSize(new java.awt.Dimension(795, 80));
         jPanel8.add(detailNameLabel, java.awt.BorderLayout.CENTER);
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
@@ -730,12 +740,20 @@ public class MainScreen extends javax.swing.JFrame {
         );
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
         jPanel16.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        detailShortDesLabel.setEditable(false);
+        detailShortDesLabel.setColumns(20);
         detailShortDesLabel.setFont(new java.awt.Font("Calibri", 3, 18)); // NOI18N
-        detailShortDesLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        detailShortDesLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jPanel16.add(detailShortDesLabel, java.awt.BorderLayout.CENTER);
+        detailShortDesLabel.setLineWrap(true);
+        detailShortDesLabel.setRows(2);
+        detailShortDesLabel.setWrapStyleWord(true);
+        jScrollPane5.setViewportView(detailShortDesLabel);
+
+        jPanel16.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout detailConferencePanelLayout = new javax.swing.GroupLayout(detailConferencePanel);
         detailConferencePanel.setLayout(detailConferencePanelLayout);
@@ -762,7 +780,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1815,12 +1833,14 @@ public class MainScreen extends javax.swing.JFrame {
         }catch(NullPointerException ex){}
         
         detailDescriptionLabel.setText(detail);
+        detailDescriptionLabel.setCaretPosition(0);
         detailNameLabel.setText(name);
         detailTimeLabel.setText(time);
         detailLocationLabel.setText(location);
         detailMemberLabel.setText(member);
         detailAccpectLabel.setText(alJoined);
         detailShortDesLabel.setText(shortDes);
+        detailShortDesLabel.setCaretPosition(0);
         
         Iterator<UserHoinghi> usrHn = conference.getUserHoinghis().iterator();
         DefaultListModel memberModel = new DefaultListModel();
@@ -2267,7 +2287,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel detailLocationLabel;
     private javax.swing.JLabel detailMemberLabel;
     private javax.swing.JLabel detailNameLabel;
-    private javax.swing.JLabel detailShortDesLabel;
+    private javax.swing.JTextArea detailShortDesLabel;
     private javax.swing.JLabel detailTimeLabel;
     private javax.swing.JLabel homeImage;
     private javax.swing.JPanel homePanel;
@@ -2324,6 +2344,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton joinNowButton;
