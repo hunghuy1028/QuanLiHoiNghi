@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-Jul-2020 14:10:36 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Conference" table="conference" catalog="conference_manager" optimistic-lock="version">
+        <id name="idHoiNghi" type="java.lang.Integer">
+            <column name="idHoiNghi" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="location" class="POJOs.Location" fetch="select" lazy = "false">
+            <column name="DiaDiem" not-null="true" />
+        </many-to-one>
+        <property name="ten" type="string">
+            <column name="Ten" length="500" not-null="true" />
+        </property>
+        <property name="moTaNgan" type="string">
+            <column name="MoTaNgan" length="1000" not-null="true" />
+        </property>
+        <property name="moTaChiTiet" type="string">
+            <column name="MoTaChiTiet" length="4000" not-null="true" />
+        </property>
+        <property name="hinhAnh" type="string">
+            <column name="HinhAnh" length="500" not-null="true" />
+        </property>
+        <property name="thoiGian" type="timestamp">
+            <column name="ThoiGian" length="19" not-null="true" />
+        </property>
+        <property name="ngThamDu" type="int">
+            <column name="NgThamDu" not-null="true" />
+        </property>
+        <set name="userHoinghis" table="user_hoinghi" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="idHoiNghi" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.UserHoinghi" />
+        </set>
+    </class>
+</hibernate-mapping>

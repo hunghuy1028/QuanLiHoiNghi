@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-Jul-2020 14:10:36 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.UserHoinghi" table="user_hoinghi" catalog="conference_manager" optimistic-lock="version">
+        <composite-id name="id" class="POJOs.UserHoinghiId">
+            <key-property name="idHoiNghi" type="int">
+                <column name="idHoiNghi" />
+            </key-property>
+            <key-property name="idUser" type="int">
+                <column name="idUser" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="account" class="POJOs.Account" update="false" insert="false" fetch="select" lazy = "false">
+            <column name="idUser" not-null="true" />
+        </many-to-one>
+        <many-to-one name="conference" class="POJOs.Conference" update="false" insert="false" fetch="select" lazy = "false">
+            <column name="idHoiNghi" not-null="true" />
+        </many-to-one>
+        <property name="status" type="int">
+            <column name="status" not-null="true">
+                <comment>0:false, 1: true</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
